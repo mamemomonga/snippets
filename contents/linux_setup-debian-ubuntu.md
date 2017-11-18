@@ -112,7 +112,7 @@ ntpd再起動と動作確認
 	ntpq -p
 
 
-# postfix
+## postfix
 
 	#-- { "wrap":"sudo bash -xeu" }
 	DEBIAN_FRONTEND=noninteractive apt-get install -y postfix

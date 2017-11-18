@@ -124,7 +124,7 @@ sleep 10
 ntpq -p</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
-</div><h1 id="postfix">postfix</h1>
+</div><h2 id="postfix">postfix</h2>
 <div class="code"><pre class="line-numbers">
 <code class="language-bash" data-config='{ "wrap":"sudo bash -xeu" }'>DEBIAN_FRONTEND=noninteractive apt-get install -y postfix
 sed -i.bak -e 's/^\(inet_protocols = all\)/#\1/' /etc/postfix/main.cf
