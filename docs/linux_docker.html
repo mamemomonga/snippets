@@ -19,23 +19,41 @@
 <li>OverlayFS2 を使用する</li>
 <li>dockerデータを別ディスクに設定する</li>
 </ul>
-<p>Dockerのインストールとセットアップ</p>
+<h3 id="docker-">Dockerのインストールとセットアップ</h3>
 <div class="code"><pre class="line-numbers">
-<code class="language-bash" data-config='{"wrap":"sudo bash -xeu"}'>wget https://get.docker.com -O - | sh
+<code class="language-bash" data-config='{"wrap":"sudo bash -eu"}'>wget https://get.docker.com -O - | sh
 systemctl stop docker
 
 CONFIGURATION_FILE=$(systemctl show --property=FragmentPath docker | cut -f2 -d=)
-$CONFIGURATION_FILE
+echo "[CONFIGURATION_FILE] $CONFIGURATION_FILE"
 cp $CONFIGURATION_FILE /etc/systemd/system/docker.service
 
 perl -pi -e 's/^(ExecStart=.+)$/$1 -s overlay2/' /etc/systemd/system/docker.service
 systemctl daemon-reload
 systemctl start docker
-docker info 2>&1 | grep 'Storage Driver'
-usermod -a -G docker $USER</code></pre>
+docker info 2>&1 | grep 'Storage Driver'</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -eu)"><br>
+</div><p>現在のユーザをdockerコマンドを実行できるようにする</p>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{"wrap":"sudo bash -xeu"}'>usermod -a -G docker $USER</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
-</div><p>新しいディスクを追加する。/dev/xvdf(/dev/sdf)に割り当てるものとする</p>
+</div><p>いったんログアウトする</p>
+<h3 id="docker-compose-">Docker Composeのインストール</h3>
+<p><a href="https://docs.docker.com/compose/install/#install-compose">こちらで</a> 最新版を確認する</p>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{"wrap":"sudo bash -xeu"}'>curl -L https://github.com/docker/compose/releases/download/1.17.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+chmod 755 /usr/local/bin/docker-compose</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
+</div><p>実行の確認</p>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{}'>docker-compose --version</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+</div><h3 id="-">データを別ボリュームに置く</h3>
+<p>新しいディスクを追加する。/dev/xvdf(/dev/sdf)に割り当てるものとする</p>
 <p><strong>割り当てドライブを十分に確認すること</strong></p>
 <div class="code"><pre class="line-numbers">
 <code class="language-bash" data-config='{"wrap":"sudo bash -xeu"}'>fdisk /dev/xvdf << 'EOS'
@@ -66,21 +84,7 @@ $ sudo service docker start
 $ docker info</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
-</div><p>Docker Composeのインストール</p>
-<p><a href="https://docs.docker.com/compose/install/#install-compose">こちらで</a> 最新版を確認する</p>
-<div class="code"><pre class="line-numbers">
-<code class="language-bash" data-config='{"wrap":"sudo bash -xeu"}'>curl -L https://github.com/docker/compose/releases/download/1.17.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
-chmod 755 /usr/local/bin/docker-compose</code></pre>
-<pre><code class="copyarea"></code></pre>
-<input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
-</div><p>実行の確認</p>
-<div class="code"><pre class="line-numbers">
-<code class="language-bash" data-config='{}'>docker-compose --version</code></pre>
-<pre><code class="copyarea"></code></pre>
-<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
-</div><h1 id="-">参考資料</h1>
-<p><a href="http://blog.ciplogic.com/index.php/blog/109-docker-with-overlayfs-on-ubuntu-16-04-lts">http://blog.ciplogic.com/index.php/blog/109-docker-with-overlayfs-on-ubuntu-16-04-lts</a></p>
-
+</div>
 <hr><a href="index.html">INDEX</a> | <a href="https://github.com/mamemomonga/snippets">GitHub</a>
 </div>
 

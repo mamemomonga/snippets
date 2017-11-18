@@ -14,18 +14,7 @@
 <div class="container">
 <a href="index.html">INDEX</a> | <a href="https://github.com/mamemomonga/snippets">GitHub</a><hr>
 <h1 id="linux-debian-jessie-8-x-ubuntu-xenial-14-04-">Linux: Debian Jessie(8.x), Ubuntu xenial(14.04) の設定</h1>
-<h2 id="sudo">sudo</h2>
-<p>ユーザ「wheel」をパスワードなしでrootになれるユーザにする</p>
-<p>rootで実行</p>
-<div class="code"><pre class="line-numbers">
-<code class="language-bash" data-config='{ "wrap":"bash -xeu" }'>DEBIAN_FRONTEND=noninteractive apt-get install -y sudo
-cat > /etc/sudoers.d/wheel_user << 'EOS'
-wheel ALL=(ALL) NOPASSWD:ALL
-EOS
-chmod 600 /etc/sudoers.d/wheel_user</code></pre>
-<pre><code class="copyarea"></code></pre>
-<input type="button" onclick="bt_copy_range(this)" value="コピー (bash -xeu)"><br>
-</div><h2 id="-">ホスト名変更</h2>
+<h2 id="-">ホスト名変更</h2>
 <p>ホスト名を「THE_NEW_HOSTNAME」に設定して再起動</p>
 <div class="code"><div class="controlform">THE_NEW_HOSTNAME: <input type="text" onchange="text_placeholder_change(this)" placeholder="THE_NEW_HOSTNAME"></div><pre class="line-numbers">
 <code class="language-bash" data-config='{ "wrap":"sudo bash -xeu","placeholder":"THE_NEW_HOSTNAME" }'>NEW_HOSTNAME="THE_NEW_HOSTNAME"
@@ -143,6 +132,24 @@ echo 'inet_protocols = ipv4' >> /etc/postfix/main.cf
 service postfix restart</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
+</div><h2 id="-sudo-">ユーザの追加とsudoユーザ</h2>
+<p>パスワードなしでsudoできるユーザを作成する</p>
+<p>rootで実行する</p>
+<div class="code"><div class="controlform">ubuntu: <input type="text" onchange="text_placeholder_change(this)" placeholder="ubuntu"></div><pre class="line-numbers">
+<code class="language-bash" data-config='{ "wrap":"bash -xeu","placeholder":"ubuntu" }'>NEW_USER=ubuntu
+NEW_ID=1001
+export DEBIAN_FRONTEND=noninteractive
+
+groupadd -g $NEW_ID $NEW_USER
+useradd -g $NEW_ID -u $NEW_ID -m -s /bin/bash $NEW_USER
+
+apt-get install -y sudo
+cat > /etc/sudoers.d/wheel_user << EOS
+$NEW_USER ALL=(ALL) NOPASSWD:ALL
+EOS
+chmod 600 /etc/sudoers.d/wheel_user</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー (bash -xeu)"><br>
 </div>
 <hr><a href="index.html">INDEX</a> | <a href="https://github.com/mamemomonga/snippets">GitHub</a>
 </div>

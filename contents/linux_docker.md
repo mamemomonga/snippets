@@ -5,22 +5,42 @@
 * OverlayFS2 を使用する
 * dockerデータを別ディスクに設定する
 
-Dockerのインストールとセットアップ
+### Dockerのインストールとセットアップ
 
-	#-- {"wrap":"sudo bash -xeu"}
+	#-- {"wrap":"sudo bash -eu"}
 	wget https://get.docker.com -O - | sh
 	systemctl stop docker
  
 	CONFIGURATION_FILE=$(systemctl show --property=FragmentPath docker | cut -f2 -d=)
-	$CONFIGURATION_FILE
+	echo "[CONFIGURATION_FILE] $CONFIGURATION_FILE"
 	cp $CONFIGURATION_FILE /etc/systemd/system/docker.service
 
 	perl -pi -e 's/^(ExecStart=.+)$/$1 -s overlay2/' /etc/systemd/system/docker.service
 	systemctl daemon-reload
 	systemctl start docker
 	docker info 2>&1 | grep 'Storage Driver'
+
+現在のユーザをdockerコマンドを実行できるようにする
+
+	#-- {"wrap":"sudo bash -xeu"}
 	usermod -a -G docker $USER
 
+いったんログアウトする
+
+### Docker Composeのインストール
+
+[こちらで](https://docs.docker.com/compose/install/#install-compose) 最新版を確認する
+
+
+	#-- {"wrap":"sudo bash -xeu"}
+	curl -L https://github.com/docker/compose/releases/download/1.17.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+	chmod 755 /usr/local/bin/docker-compose
+
+実行の確認
+
+	docker-compose --version
+
+### データを別ボリュームに置く
 新しいディスクを追加する。/dev/xvdf(/dev/sdf)に割り当てるものとする
 
 **割り当てドライブを十分に確認すること**
@@ -52,20 +72,4 @@ Dockerのインストールとセットアップ
 	$ sudo service docker start
 	$ docker info
 
-Docker Composeのインストール
-
-[こちらで](https://docs.docker.com/compose/install/#install-compose) 最新版を確認する
-
-
-	#-- {"wrap":"sudo bash -xeu"}
-	curl -L https://github.com/docker/compose/releases/download/1.17.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
-	chmod 755 /usr/local/bin/docker-compose
-
-実行の確認
-
-	docker-compose --version
-
-# 参考資料
-
-http://blog.ciplogic.com/index.php/blog/109-docker-with-overlayfs-on-ubuntu-16-04-lts
 

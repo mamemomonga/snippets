@@ -1,18 +1,5 @@
 # Linux: Debian Jessie(8.x), Ubuntu xenial(14.04) の設定
 
-## sudo
-
-ユーザ「wheel」をパスワードなしでrootになれるユーザにする
-
-rootで実行
-
-	#-- { "wrap":"bash -xeu" }
-	DEBIAN_FRONTEND=noninteractive apt-get install -y sudo
-	cat > /etc/sudoers.d/wheel_user << 'EOS'
-	wheel ALL=(ALL) NOPASSWD:ALL
-	EOS
-	chmod 600 /etc/sudoers.d/wheel_user
-
 ## ホスト名変更
 
 ホスト名を「THE_NEW_HOSTNAME」に設定して再起動
@@ -132,4 +119,25 @@ ntpd再起動と動作確認
 	sed -i.bak -e 's/^\(inet_protocols = all\)/#\1/' /etc/postfix/main.cf
 	echo 'inet_protocols = ipv4' >> /etc/postfix/main.cf
 	service postfix restart
+
+
+## ユーザの追加とsudoユーザ
+
+パスワードなしでsudoできるユーザを作成する
+
+rootで実行する
+
+	#-- { "wrap":"bash -xeu","placeholder":"ubuntu" }
+	NEW_USER=ubuntu
+	NEW_ID=1001
+	export DEBIAN_FRONTEND=noninteractive
+
+	groupadd -g $NEW_ID $NEW_USER
+	useradd -g $NEW_ID -u $NEW_ID -m -s /bin/bash $NEW_USER
+
+	apt-get install -y sudo
+	cat > /etc/sudoers.d/wheel_user << EOS
+	$NEW_USER ALL=(ALL) NOPASSWD:ALL
+	EOS
+	chmod 600 /etc/sudoers.d/wheel_user
 
