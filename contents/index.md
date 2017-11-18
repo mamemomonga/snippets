@@ -5,6 +5,7 @@
 # ページ一覧
 
 * [Linux: Debian Jessie(8.x), Ubuntu xenial(14.04) の設定](linux_setup-debian-ubuntu.html)
+* [Mastodon: ポスト](mastodon_posts.html)
 
 # 使い方
 

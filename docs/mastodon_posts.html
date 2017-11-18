@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title></title>
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" type="text/css" href="prism.css" media="all">
+<link rel="stylesheet" type="text/css" href="index.css" media="all">
+<script src="prism.js"></script>
+<script src="index.js"></script>
+</head>
+<body>
+
+<div class="container">
+<a href="index.html">INDEX</a> | <a href="https://github.com/mamemomonga/snippets">GitHub</a><br>
+
+<h1 id="mastodon-">Mastodon: ポスト</h1>
+<h2 id="-">縦書きポスト</h2>
+<p><a href="https://github.com/ihabunek/toot">tootコマンドが必要</a></p>
+<div><div class="controlform">TATEGAKI: <input type="text" onchange="text_placeholder_change(this)" placeholder="TATEGAKI"></div><pre class="line-numbers">
+<code class="language-bash" data-config='{"placeholder":"TATEGAKI"}'>echo "TATEGAKI" | perl -MEncode -E '$_=<>; chomp; say encode_utf8(join("",reverse map qq{echo "$_" | toot post\n},split(//,decode_utf8($_))))' | sh</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+</div>
+</div>
+
+</body>
+</html>
