@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title></title>
-<meta name="viewport" content="width=device-width">
+<meta name="viewport" content="width=1000px">
 <link rel="stylesheet" type="text/css" href="assets/prism.css" media="all">
 <link rel="stylesheet" type="text/css" href="assets/index.css" media="all">
 <script src="assets/prism.js"></script>
@@ -16,7 +16,7 @@
 <h1 id="linux-debian-jessie-8-x-ubuntu-xenial-14-04-">Linux: Debian Jessie(8.x), Ubuntu xenial(14.04) の設定</h1>
 <h2 id="-">ホスト名変更</h2>
 <p>ホスト名を「THE_NEW_HOSTNAME」に設定して再起動</p>
-<div class="code"><div class="controlform">THE_NEW_HOSTNAME: <input type="text" onchange="text_placeholder_change(this)" placeholder="THE_NEW_HOSTNAME"></div><pre class="line-numbers">
+<div class="code"><div class="controlform">THE_NEW_HOSTNAME: <input type="text" onchange="text_placeholder_change(this)" placeholder="THE_NEW_HOSTNAME"></div><pre class="">
 <code class="language-bash" data-config='{ "wrap":"sudo bash -xeu","placeholder":"THE_NEW_HOSTNAME" }'>NEW_HOSTNAME="THE_NEW_HOSTNAME"
 echo "$NEW_HOSTNAME" > /etc/hostname
 echo "127.0.0.1 localhost $NEW_HOSTNAME" > /tmp/hosts
@@ -27,7 +27,7 @@ reboot</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
 </div><h2 id="-">ローカルタイムを日本時間にする</h2>
-<div class="code"><pre class="line-numbers">
+<div class="code"><pre class="">
 <code class="language-bash" data-config='{ "wrap":"sudo bash -xeu" }'>rm /etc/localtime
 ln -s /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 echo 'Asia/Tokyo' > /etc/timezone
@@ -35,7 +35,7 @@ date</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
 </div><h2 id="-">ロケールが日本語だったら英語にする</h2>
-<div class="code"><pre class="line-numbers">
+<div class="code"><pre class="">
 <code class="language-bash" data-config='{ "wrap":"sudo bash -xeu" }'>if [ "$LANG" = "ja_JP.UTF-8" ]; then
     sed -i '/^# en_US.UTF-8 UTF-8/s/^# //' /etc/locale.gen
     locale-gen
@@ -44,7 +44,7 @@ fi</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
 </div><h2 id="update-git-curl-wget">update, git, curl, wget</h2>
-<div class="code"><pre class="line-numbers">
+<div class="code"><pre class="">
 <code class="language-bash" data-config='{ "wrap":"sudo bash -xeu" }'>export DEBIAN_FRONTEND=noninteractive
 apt-get update
 apt-get -y upgrade
@@ -52,12 +52,12 @@ apt-get install -y git-core curl wget</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
 </div><h2 id="build-essential">build-essential</h2>
-<div class="code"><pre class="line-numbers">
+<div class="code"><pre class="">
 <code class="language-bash" data-config='{}'>sudo sh -c 'DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential'</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
 </div><h2 id="vim">vim</h2>
-<div class="code"><pre class="line-numbers">
+<div class="code"><pre class="">
 <code class="language-bash" data-config='{ "wrap":"sudo bash -xeu" }'>DEBIAN_FRONTEND=noninteractive apt-get install -y vim
 cat > /etc/vim/vimrc.local << 'EOS'
 syntax on
@@ -80,7 +80,7 @@ sudo sh -c "echo '3' | update-alternatives --config editor"</code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
 </div><h2 id="ntp">NTP</h2>
 <p>インストールと基本設定</p>
-<div class="code"><pre class="line-numbers">
+<div class="code"><pre class="">
 <code class="language-bash" data-config='{ "wrap":"sudo bash -xeu" }'>DEBIAN_FRONTEND=noninteractive apt-get install -y ntp
 mv /etc/ntp.conf /etc/ntp.conf.orig
 
@@ -99,7 +99,7 @@ EOS</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
 </div><p>参照先: 日本国内の場合</p>
-<div class="code"><pre class="line-numbers">
+<div class="code"><pre class="">
 <code class="language-bash" data-config='{ "wrap":"sudo bash -xeu" }'>cat >> /etc/ntp.conf << 'EOS'
 server ntp1.jst.mfeed.ad.jp iburst
 server ntp2.jst.mfeed.ad.jp iburst
@@ -108,7 +108,7 @@ EOS</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
 </div><p>参照先: AmazonEC2の場合</p>
-<div class="code"><pre class="line-numbers">
+<div class="code"><pre class="">
 <code class="language-bash" data-config='{ "wrap":"sudo bash -xeu" }'>cat >> /etc/ntp.conf << 'EOS'
 server 0.amazon.pool.ntp.org iburst
 server 1.amazon.pool.ntp.org iburst
@@ -118,14 +118,14 @@ EOS</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
 </div><p>ntpd再起動と動作確認</p>
-<div class="code"><pre class="line-numbers">
+<div class="code"><pre class="">
 <code class="language-bash" data-config='{ "wrap":"sudo bash -xeu" }'>service ntp restart
 sleep 10
 ntpq -p</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
 </div><h2 id="postfix">postfix</h2>
-<div class="code"><pre class="line-numbers">
+<div class="code"><pre class="">
 <code class="language-bash" data-config='{ "wrap":"sudo bash -xeu" }'>DEBIAN_FRONTEND=noninteractive apt-get install -y postfix
 sed -i.bak -e 's/^\(inet_protocols = all\)/#\1/' /etc/postfix/main.cf
 echo 'inet_protocols = ipv4' >> /etc/postfix/main.cf
@@ -135,7 +135,7 @@ service postfix restart</code></pre>
 </div><h2 id="-sudo-">ユーザの追加とsudoユーザ</h2>
 <p>パスワードなしでsudoできるユーザを作成する</p>
 <p>rootで実行する</p>
-<div class="code"><div class="controlform">ubuntu: <input type="text" onchange="text_placeholder_change(this)" placeholder="ubuntu"></div><pre class="line-numbers">
+<div class="code"><div class="controlform">ubuntu: <input type="text" onchange="text_placeholder_change(this)" placeholder="ubuntu"></div><pre class="">
 <code class="language-bash" data-config='{ "wrap":"bash -xeu","placeholder":"ubuntu" }'>NEW_USER=ubuntu
 NEW_ID=1001
 export DEBIAN_FRONTEND=noninteractive

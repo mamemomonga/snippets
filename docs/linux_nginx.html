@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title></title>
-<meta name="viewport" content="width=device-width">
+<meta name="viewport" content="width=1000px">
 <link rel="stylesheet" type="text/css" href="assets/prism.css" media="all">
 <link rel="stylesheet" type="text/css" href="assets/index.css" media="all">
 <script src="assets/prism.js"></script>
@@ -16,7 +16,7 @@
 <h1 id="nginx">nginx</h1>
 <p><a href="https://nginx.org/en/">https://nginx.org/en/</a></p>
 <h1 id="ubuntu-">Ubuntuへのインストール</h1>
-<div class="code"><pre class="line-numbers">
+<div class="code"><pre class="">
 <code class="language-bash" data-config='{"wrap":"sudo bash -eux"}'>. /etc/lsb-release
 cat >> /etc/apt/sources.list << EOS
 # nginx
@@ -33,7 +33,7 @@ apt-get -y install nginx</code></pre>
 </div><h1 id="nginx-conf">nginx.conf</h1>
 <h2 id="nginx-ip-basic-">nginxでIP制限とBasic認証を併用する</h2>
 <p>IP制限のルールにマッチしない場合はBASIC認証を行う</p>
-<div class="code"><pre class="line-numbers">
+<div class="code"><pre class="">
 <code class="language-nginx" data-config='{"language":"nginx"}'>http {
     get $access_allowed {
         default disable;
@@ -81,7 +81,7 @@ apt-get -y install nginx</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
 </div><p>htpasswdは debian系ならば apache2-utils にある</p>
-<div class="code"><pre class="line-numbers">
+<div class="code"><pre class="">
 <code class="language-bash" data-config='{}'>htpasswd -c /etc/nginx/htpasswd [USERNAME]</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー"><br>

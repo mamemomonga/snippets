@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title></title>
-<meta name="viewport" content="width=device-width">
+<meta name="viewport" content="width=1000px">
 <link rel="stylesheet" type="text/css" href="assets/prism.css" media="all">
 <link rel="stylesheet" type="text/css" href="assets/index.css" media="all">
 <script src="assets/prism.js"></script>
@@ -18,21 +18,21 @@
 <h2 id="-">インストール</h2>
 <h3 id="-">リポジトリ設定</h3>
 <p>MariaDB 10.1 Debian 8 Jessie</p>
-<div class="code"><pre class="line-numbers">
+<div class="code"><pre class="">
 <code class="language-bash" data-config='{ "wrap":"sudo bash -xeu" }'>apt-get install -y software-properties-common
 apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
 add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://ftp.yz.yamagata-u.ac.jp/pub/dbms/mariadb/repo/10.1/debian jessie main'</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
 </div><p>MariaDB 10.1 Ubuntu 16.04 LTS xenial</p>
-<div class="code"><pre class="line-numbers">
+<div class="code"><pre class="">
 <code class="language-bash" data-config='{ "wrap":"sudo bash -xeu" }'>apt-get install -y software-properties-common
 apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
 add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://ftp.yz.yamagata-u.ac.jp/pub/dbms/mariadb/repo/10.1/ubuntu xenial main'</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
 </div><p>インストール</p>
-<div class="code"><pre class="line-numbers">
+<div class="code"><pre class="">
 <code class="language-bash" data-config='{ "wrap":"sudo bash -xeu" }'>export DEBIAN_FRONTEND=noninteractive
 apt-get update
 apt-get -q -y install mariadb-server</code></pre>
@@ -40,7 +40,7 @@ apt-get -q -y install mariadb-server</code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
 </div><h2 id="mysql-">MySQLのルートパスワードを自動設定する</h2>
 <p>ランダムなパスワードを生成し、それをMySQL rootパスワードとして設定する。また、UNIX rootユーザの場合パスワードレスでログインできるように、/root/.my.cnfにパスワードを保存する。</p>
-<div class="code"><pre class="line-numbers">
+<div class="code"><pre class="">
 <code class="language-bash" data-config='{"wrap":"sudo bash -xeu"}'>MYSQLPASSWORD=$(perl -e 'my @chars; for(my $i=0;$i<$ARGV[1];$i++) { push @chars,substr($ARGV[0],int(rand()*length($ARGV[0])),1) }; print join("",@chars);' 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789-_().!' 32)
 mysqladmin password "$MYSQLPASSWORD"
 echo '[client]' > /root/.my.cnf
@@ -51,18 +51,18 @@ chmod 600 /root/.my.cnf</code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
 </div><h3 id="root-">rootでログイン</h3>
 <p>rootでログインする</p>
-<div class="code"><pre class="line-numbers">
+<div class="code"><pre class="">
 <code class="language-bash" data-config='{}'>sudo su -
 mysql</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
 </div><p>.my.cnfを指定する</p>
-<div class="code"><pre class="line-numbers">
+<div class="code"><pre class="">
 <code class="language-bash" data-config='{}'>sudo mysql --defaults-extra-file=/root/.my.cnf</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
 </div><p>初回設定以降 sudo mysql のみでOK</p>
-<div class="code"><pre class="line-numbers">
+<div class="code"><pre class="">
 <code class="language-bash" data-config='{}'>sudo ln -s /root/.my.cnf ~/.my.cnf
 sudo mysql</code></pre>
 <pre><code class="copyarea"></code></pre>

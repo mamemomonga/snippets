@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title></title>
-<meta name="viewport" content="width=device-width">
+<meta name="viewport" content="width=1000px">
 <link rel="stylesheet" type="text/css" href="assets/prism.css" media="all">
 <link rel="stylesheet" type="text/css" href="assets/index.css" media="all">
 <script src="assets/prism.js"></script>
@@ -17,7 +17,7 @@
 <p>JSONのデータを表示・加工できます。</p>
 <p><a href="https://stedolan.github.io/jq/manual/">https://stedolan.github.io/jq/manual/</a></p>
 <h2 id="-">値の追加</h2>
-<div class="code"><pre class="line-numbers">
+<div class="code"><pre class="">
 <code class="language-bash" data-config='{}'>echo '{"hoge":"moge"}' > data1.json && cat data1.json
 cat data1.json | jq '.+{"tada":"dada"}' > data2.json && cat data2.json
 cat data2.json | jq 'del(.hoge)' > data3.json && cat data3.json</code></pre>

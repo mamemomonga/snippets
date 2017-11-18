@@ -25,9 +25,7 @@ export default ()=>{
 	}
 
 	renderer.code=(text,level)=>{
-
 		const c=parse_text(text)
-
 		const code=c.data;
 		const language=( c.cfg.language ) ? c.cfg.language : "bash";
 		const bt_text=(c.cfg.wrap) ? `コピー (${c.cfg.wrap})` : 'コピー'
@@ -37,7 +35,7 @@ export default ()=>{
 			placeholder=`<div class="controlform">${c.cfg.placeholder}: <input type="text" onchange="text_placeholder_change(this)" placeholder="${c.cfg.placeholder}"></div>`;
 		}
 
-		return `<div class="code">${placeholder}<pre class="line-numbers">
+		return `<div class="code">${placeholder}<pre class="">
 <code class="language-${language}" data-config='${c.raw}'>${code}</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="${bt_text}"><br>

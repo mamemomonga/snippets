@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title></title>
-<meta name="viewport" content="width=device-width">
+<meta name="viewport" content="width=1000px">
 <link rel="stylesheet" type="text/css" href="assets/prism.css" media="all">
 <link rel="stylesheet" type="text/css" href="assets/index.css" media="all">
 <script src="assets/prism.js"></script>
@@ -20,7 +20,7 @@
 <li>dockerデータを別ディスクに設定する</li>
 </ul>
 <h3 id="docker-">Dockerのインストールとセットアップ</h3>
-<div class="code"><pre class="line-numbers">
+<div class="code"><pre class="">
 <code class="language-bash" data-config='{"wrap":"sudo bash -eu"}'>wget https://get.docker.com -O - | sh
 systemctl stop docker
 
@@ -35,27 +35,27 @@ docker info 2>&1 | grep 'Storage Driver'</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -eu)"><br>
 </div><p>現在のユーザをdockerコマンドを実行できるようにする</p>
-<div class="code"><pre class="line-numbers">
+<div class="code"><pre class="">
 <code class="language-bash" data-config='{"wrap":"sudo bash -xeu"}'>usermod -a -G docker $USER</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
 </div><p>いったんログアウトする</p>
 <h3 id="docker-compose-">Docker Composeのインストール</h3>
 <p><a href="https://docs.docker.com/compose/install/#install-compose">こちらで</a> 最新版を確認する</p>
-<div class="code"><pre class="line-numbers">
+<div class="code"><pre class="">
 <code class="language-bash" data-config='{"wrap":"sudo bash -xeu"}'>curl -L https://github.com/docker/compose/releases/download/1.17.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 chmod 755 /usr/local/bin/docker-compose</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
 </div><p>実行の確認</p>
-<div class="code"><pre class="line-numbers">
+<div class="code"><pre class="">
 <code class="language-bash" data-config='{}'>docker-compose --version</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
 </div><h3 id="-">データを別ボリュームに置く</h3>
 <p>新しいディスクを追加する。/dev/xvdf(/dev/sdf)に割り当てるものとする</p>
 <p><strong>割り当てドライブを十分に確認すること</strong></p>
-<div class="code"><pre class="line-numbers">
+<div class="code"><pre class="">
 <code class="language-bash" data-config='{"wrap":"sudo bash -xeu"}'>fdisk /dev/xvdf << 'EOS'
 n
 p
@@ -68,7 +68,7 @@ EOS</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
 </div><p>コピペする場合は先頭の $ は除去して一行づつ確認しながら実行</p>
-<div class="code"><pre class="line-numbers">
+<div class="code"><pre class="">
 <code class="language-bash" data-config='{}'>$ sudo mkfs.ext4 /dev/xvdf1
 $ sudo mount /dev/xvdf1 /mnt
 $ sudo e2label /dev/xvdf1 docker
