@@ -13,7 +13,9 @@ rootで実行
 	EOS
 	chmod 600 /etc/sudoers.d/wheel_user
 
-## ホスト名を「THE_NEW_HOSTNAME」に設定する
+## ホスト名変更
+
+ホスト名を「THE_NEW_HOSTNAME」に設定して再起動
 
 	#-- { "wrap":"sudo bash -xeu","placeholder":"THE_NEW_HOSTNAME" }
 	NEW_HOSTNAME="THE_NEW_HOSTNAME"
@@ -41,7 +43,7 @@ rootで実行
 		update-locale LANG=en_US.UTF-8
 	fi
 
-## git, curl, wget
+## update, git, curl, wget
 
 	#-- { "wrap":"sudo bash -xeu" }
 	export DEBIAN_FRONTEND=noninteractive
@@ -77,6 +79,8 @@ rootで実行
 
 ## NTP
 
+インストールと基本設定
+
 	#-- { "wrap":"sudo bash -xeu" }
 	DEBIAN_FRONTEND=noninteractive apt-get install -y ntp
 	mv /etc/ntp.conf /etc/ntp.conf.orig
@@ -92,24 +96,30 @@ rootで実行
 	restrict -6 default kod nomodify notrap nopeer noquery
 	restrict 127.0.0.1 
 	restrict ::1
-	
 	EOS
 
-	if [ -f '/etc/cloud/cloud.cfg' ]; then
-		cat >> /etc/ntp.conf << 'EOS'
+参照先: 日本国内の場合
+
+	#-- { "wrap":"sudo bash -xeu" }
+	cat >> /etc/ntp.conf << 'EOS'
+	server ntp1.jst.mfeed.ad.jp iburst
+	server ntp2.jst.mfeed.ad.jp iburst
+	server ntp3.jst.mfeed.ad.jp iburst
+	EOS
+
+参照先: AmazonEC2の場合
+
+	#-- { "wrap":"sudo bash -xeu" }
+	cat >> /etc/ntp.conf << 'EOS'
 	server 0.amazon.pool.ntp.org iburst
 	server 1.amazon.pool.ntp.org iburst
 	server 2.amazon.pool.ntp.org iburst
 	server 3.amazon.pool.ntp.org iburst
 	EOS
-	else
-		cat >> /etc/ntp.conf << 'EOS'
-	server ntp1.jst.mfeed.ad.jp iburst
-	server ntp2.jst.mfeed.ad.jp iburst
-	server ntp3.jst.mfeed.ad.jp iburst
-	EOS
-	fi
 
+ntpd再起動と動作確認
+
+	#-- { "wrap":"sudo bash -xeu" }
 	service ntp restart
 	sleep 10
 	ntpq -p

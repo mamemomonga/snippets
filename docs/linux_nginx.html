@@ -16,21 +16,16 @@
 <h1 id="nginx">nginx</h1>
 <p><a href="https://nginx.org/en/">https://nginx.org/en/</a></p>
 <h1 id="ubuntu-">Ubuntuへのインストール</h1>
-<p>リポジトリの設定</p>
 <div class="code"><pre class="line-numbers">
 <code class="language-bash" data-config='{"wrap":"sudo bash -eux"}'>. /etc/lsb-release
-cat >> /etc/apt/sources.list << EOT
+cat >> /etc/apt/sources.list << EOS
 # nginx
 deb http://nginx.org/packages/ubuntu/ $DISTRIB_CODENAME nginx
 deb-src http://nginx.org/packages/ubuntu/ $DISTRIB_CODENAME nginx
-EOT
-EOS</code></pre>
-<pre><code class="copyarea"></code></pre>
-<input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -eux)"><br>
-</div><p>インストール</p>
-<div class="code"><pre class="line-numbers">
-<code class="language-bash" data-config='{"wrap":"sudo bash -eux"}'>wget https://nginx.org/keys/nginx_signing.key
-apt-key add nginx_signing.key
+EOS
+
+curl -o /tmp/nginx_signing.key https://nginx.org/keys/nginx_signing.key
+apt-key add /tmp/nginx_signing.key
 apt-get -y update
 apt-get -y install nginx</code></pre>
 <pre><code class="copyarea"></code></pre>

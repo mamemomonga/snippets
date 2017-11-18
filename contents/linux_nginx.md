@@ -4,22 +4,16 @@ https://nginx.org/en/
 
 # Ubuntuへのインストール
 
-リポジトリの設定
-
 	#-- {"wrap":"sudo bash -eux"}
 	. /etc/lsb-release
-	cat >> /etc/apt/sources.list << EOT
+	cat >> /etc/apt/sources.list << EOS
 	# nginx
 	deb http://nginx.org/packages/ubuntu/ $DISTRIB_CODENAME nginx
 	deb-src http://nginx.org/packages/ubuntu/ $DISTRIB_CODENAME nginx
-	EOT
 	EOS
 
-インストール
-
-	#-- {"wrap":"sudo bash -eux"}
-	wget https://nginx.org/keys/nginx_signing.key
-	apt-key add nginx_signing.key
+	curl -o /tmp/nginx_signing.key https://nginx.org/keys/nginx_signing.key
+	apt-key add /tmp/nginx_signing.key
 	apt-get -y update
 	apt-get -y install nginx
 

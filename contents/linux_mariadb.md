@@ -2,21 +2,30 @@
 
 [MariaDB repository configuration tool](https://downloads.mariadb.org/mariadb/repositories/)
 
-## MariaDB 10.1 Debian 8 Jessie
+## インストール
 
-	sudo apt-get -y install software-properties-common
-	sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
-	sudo add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://ftp.yz.yamagata-u.ac.jp/pub/dbms/mariadb/repo/10.1/debian jessie main'
-	sudo apt-get update
-	sudo apt-get install mariadb-server
+### リポジトリ設定
 
-## MariaDB 10.1 Ubuntu 16.04 LTS xenial
+MariaDB 10.1 Debian 8 Jessie
 
-	sudo apt-get install software-properties-common
-	sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-	sudo add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://ftp.yz.yamagata-u.ac.jp/pub/dbms/mariadb/repo/10.1/ubuntu xenial main'
-	sudo apt update
-	sudo apt install mariadb-server
+	#-- { "wrap":"sudo bash -xeu" }
+	apt-get install -y software-properties-common
+	apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
+	add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://ftp.yz.yamagata-u.ac.jp/pub/dbms/mariadb/repo/10.1/debian jessie main'
+
+MariaDB 10.1 Ubuntu 16.04 LTS xenial
+
+	#-- { "wrap":"sudo bash -xeu" }
+	apt-get install -y software-properties-common
+	apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
+	add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://ftp.yz.yamagata-u.ac.jp/pub/dbms/mariadb/repo/10.1/ubuntu xenial main'
+
+インストール
+
+	#-- { "wrap":"sudo bash -xeu" }
+	export DEBIAN_FRONTEND=noninteractive
+	apt-get update
+	apt-get -q -y install mariadb-server
 
 ## MySQLのルートパスワードを自動設定する
 
@@ -29,4 +38,20 @@
 	echo 'user=root' >> /root/.my.cnf
 	echo "password=$MYSQLPASSWORD" >> /root/.my.cnf
 	chmod 600 /root/.my.cnf
+
+### rootでログイン
+
+rootでログインする
+
+	sudo su -
+	mysql
+
+.my.cnfを指定する
+
+	sudo mysql --defaults-extra-file=/root/.my.cnf
+
+初回設定以降 sudo mysql のみでOK
+
+	sudo ln -s /root/.my.cnf ~/.my.cnf
+	sudo mysql
 

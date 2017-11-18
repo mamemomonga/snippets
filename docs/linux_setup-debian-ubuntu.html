@@ -25,7 +25,8 @@ EOS
 chmod 600 /etc/sudoers.d/wheel_user</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー (bash -xeu)"><br>
-</div><h2 id="-the_new_hostname-">ホスト名を「THE_NEW_HOSTNAME」に設定する</h2>
+</div><h2 id="-">ホスト名変更</h2>
+<p>ホスト名を「THE_NEW_HOSTNAME」に設定して再起動</p>
 <div class="code"><div class="controlform">THE_NEW_HOSTNAME: <input type="text" onchange="text_placeholder_change(this)" placeholder="THE_NEW_HOSTNAME"></div><pre class="line-numbers">
 <code class="language-bash" data-config='{ "wrap":"sudo bash -xeu","placeholder":"THE_NEW_HOSTNAME" }'>NEW_HOSTNAME="THE_NEW_HOSTNAME"
 echo "$NEW_HOSTNAME" > /etc/hostname
@@ -53,7 +54,7 @@ date</code></pre>
 fi</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
-</div><h2 id="git-curl-wget">git, curl, wget</h2>
+</div><h2 id="update-git-curl-wget">update, git, curl, wget</h2>
 <div class="code"><pre class="line-numbers">
 <code class="language-bash" data-config='{ "wrap":"sudo bash -xeu" }'>export DEBIAN_FRONTEND=noninteractive
 apt-get update
@@ -89,6 +90,7 @@ sudo sh -c "echo '3' | update-alternatives --config editor"</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
 </div><h2 id="ntp">NTP</h2>
+<p>インストールと基本設定</p>
 <div class="code"><pre class="line-numbers">
 <code class="language-bash" data-config='{ "wrap":"sudo bash -xeu" }'>DEBIAN_FRONTEND=noninteractive apt-get install -y ntp
 mv /etc/ntp.conf /etc/ntp.conf.orig
@@ -104,25 +106,31 @@ restrict -4 default kod notrap nomodify nopeer noquery
 restrict -6 default kod nomodify notrap nopeer noquery
 restrict 127.0.0.1 
 restrict ::1
-
-EOS
-
-if [ -f '/etc/cloud/cloud.cfg' ]; then
-    cat >> /etc/ntp.conf << 'EOS'
+EOS</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
+</div><p>参照先: 日本国内の場合</p>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{ "wrap":"sudo bash -xeu" }'>cat >> /etc/ntp.conf << 'EOS'
+server ntp1.jst.mfeed.ad.jp iburst
+server ntp2.jst.mfeed.ad.jp iburst
+server ntp3.jst.mfeed.ad.jp iburst
+EOS</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
+</div><p>参照先: AmazonEC2の場合</p>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{ "wrap":"sudo bash -xeu" }'>cat >> /etc/ntp.conf << 'EOS'
 server 0.amazon.pool.ntp.org iburst
 server 1.amazon.pool.ntp.org iburst
 server 2.amazon.pool.ntp.org iburst
 server 3.amazon.pool.ntp.org iburst
-EOS
-else
-    cat >> /etc/ntp.conf << 'EOS'
-server ntp1.jst.mfeed.ad.jp iburst
-server ntp2.jst.mfeed.ad.jp iburst
-server ntp3.jst.mfeed.ad.jp iburst
-EOS
-fi
-
-service ntp restart
+EOS</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
+</div><p>ntpd再起動と動作確認</p>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{ "wrap":"sudo bash -xeu" }'>service ntp restart
 sleep 10
 ntpq -p</code></pre>
 <pre><code class="copyarea"></code></pre>

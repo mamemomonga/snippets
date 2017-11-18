@@ -15,24 +15,29 @@
 <a href="index.html">INDEX</a> | <a href="https://github.com/mamemomonga/snippets">GitHub</a><hr>
 <h1 id="mariadb">MariaDB</h1>
 <p><a href="https://downloads.mariadb.org/mariadb/repositories/">MariaDB repository configuration tool</a></p>
-<h2 id="mariadb-10-1-debian-8-jessie">MariaDB 10.1 Debian 8 Jessie</h2>
+<h2 id="-">インストール</h2>
+<h3 id="-">リポジトリ設定</h3>
+<p>MariaDB 10.1 Debian 8 Jessie</p>
 <div class="code"><pre class="line-numbers">
-<code class="language-bash" data-config='{}'>sudo apt-get -y install software-properties-common
-sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
-sudo add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://ftp.yz.yamagata-u.ac.jp/pub/dbms/mariadb/repo/10.1/debian jessie main'
-sudo apt-get update
-sudo apt-get install mariadb-server</code></pre>
+<code class="language-bash" data-config='{ "wrap":"sudo bash -xeu" }'>apt-get install -y software-properties-common
+apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
+add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://ftp.yz.yamagata-u.ac.jp/pub/dbms/mariadb/repo/10.1/debian jessie main'</code></pre>
 <pre><code class="copyarea"></code></pre>
-<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
-</div><h2 id="mariadb-10-1-ubuntu-16-04-lts-xenial">MariaDB 10.1 Ubuntu 16.04 LTS xenial</h2>
+<input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
+</div><p>MariaDB 10.1 Ubuntu 16.04 LTS xenial</p>
 <div class="code"><pre class="line-numbers">
-<code class="language-bash" data-config='{}'>sudo apt-get install software-properties-common
-sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
-sudo add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://ftp.yz.yamagata-u.ac.jp/pub/dbms/mariadb/repo/10.1/ubuntu xenial main'
-sudo apt update
-sudo apt install mariadb-server</code></pre>
+<code class="language-bash" data-config='{ "wrap":"sudo bash -xeu" }'>apt-get install -y software-properties-common
+apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
+add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://ftp.yz.yamagata-u.ac.jp/pub/dbms/mariadb/repo/10.1/ubuntu xenial main'</code></pre>
 <pre><code class="copyarea"></code></pre>
-<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+<input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
+</div><p>インストール</p>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{ "wrap":"sudo bash -xeu" }'>export DEBIAN_FRONTEND=noninteractive
+apt-get update
+apt-get -q -y install mariadb-server</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
 </div><h2 id="mysql-">MySQLのルートパスワードを自動設定する</h2>
 <p>ランダムなパスワードを生成し、それをMySQL rootパスワードとして設定する。また、UNIX rootユーザの場合パスワードレスでログインできるように、/root/.my.cnfにパスワードを保存する。</p>
 <div class="code"><pre class="line-numbers">
@@ -44,6 +49,24 @@ echo "password=$MYSQLPASSWORD" >> /root/.my.cnf
 chmod 600 /root/.my.cnf</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
+</div><h3 id="root-">rootでログイン</h3>
+<p>rootでログインする</p>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{}'>sudo su -
+mysql</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+</div><p>.my.cnfを指定する</p>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{}'>sudo mysql --defaults-extra-file=/root/.my.cnf</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+</div><p>初回設定以降 sudo mysql のみでOK</p>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{}'>sudo ln -s /root/.my.cnf ~/.my.cnf
+sudo mysql</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
 </div>
 <hr><a href="index.html">INDEX</a> | <a href="https://github.com/mamemomonga/snippets">GitHub</a>
 </div>
