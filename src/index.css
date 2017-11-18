@@ -1,0 +1,22 @@
+body {
+	font-family: sans-serif;
+}
+
+.container {
+	margin: 20px *;
+	padding: 50px;
+}
+
+h1 {
+	text-decoration: underline;
+}
+
+.controlform {
+	font-size:12px;
+}
+
+#copyarea {
+	font-size:1px;
+	color:#FFFFFF;
+}
+
