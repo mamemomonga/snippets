@@ -29,3 +29,20 @@ h1 {
 	padding: 10px;
 	background-color:#EEEEEE;
 }
+
+table {
+	border-collapse: collapse;
+	margin: 20px 0px;
+}
+
+table th {
+	border: 1px solid #DDDDDD;
+	background-color:#EEEEEE;
+	padding: 5px 20px;
+}
+
+table td {
+	border: 1px solid #DDDDDD;
+	padding: 5px 20px;
+}
+

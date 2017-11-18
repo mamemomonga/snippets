@@ -4,9 +4,18 @@
 
 # ページ一覧
 
-* [Linux: Debian Jessie(8.x), Ubuntu xenial(14.04) の設定](linux_setup-debian-ubuntu.html)
-* [Linux: nginx](linux_nginx.html)
-* [Linux: MariaDB](linux_mariadb.html)
+## Linux, macOS, UNIX系OS
+
+* [Debian Jessie(8.x), Ubuntu xenial(14.04)](linux_setup-debian-ubuntu.html)
+* [nginx](linux_nginx.html)
+* [MariaDB](linux_mariadb.html)
+
+## CLIアプリケーション
+
+* [Bash](cli_bash.html)
+* [Jq](cli_jq.html)
+
+## マストドン
 
 * [Mastodon: ポスト](mastodon_posts.html)
 
@@ -39,4 +48,4 @@
 # ソースコード
 
 これらは Markdownを少しだけ拡張したものを変換して作成しています、
-[ソースはこちら](https://github.com/mamemomonga/linux-setup-snippets)です。
+[ソースはこちら](https://github.com/mamemomonga/snippets)です。

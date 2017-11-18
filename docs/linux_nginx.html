@@ -15,8 +15,8 @@
 <a href="index.html">INDEX</a> | <a href="https://github.com/mamemomonga/snippets">GitHub</a><hr>
 <h1 id="nginx">nginx</h1>
 <p><a href="https://nginx.org/en/">https://nginx.org/en/</a></p>
-<h3 id="ubuntu">Ubuntu</h3>
-<p>インストール</p>
+<h1 id="ubuntu-">Ubuntuへのインストール</h1>
+<p>リポジトリの設定</p>
 <div class="code"><pre class="line-numbers">
 <code class="language-bash" data-config='{"wrap":"sudo bash -eux"}'>. /etc/lsb-release
 cat >> /etc/apt/sources.list << EOT
@@ -27,13 +27,67 @@ EOT
 EOS</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -eux)"><br>
-</div><p>セットアップ</p>
+</div><p>インストール</p>
 <div class="code"><pre class="line-numbers">
-<code class="language-bash" data-config='{}'>$ wget https://nginx.org/keys/nginx_signing.key
-$ sudo apt-key add nginx_signing.key
+<code class="language-bash" data-config='{"wrap":"sudo bash -eux"}'>wget https://nginx.org/keys/nginx_signing.key
+apt-key add nginx_signing.key
+apt-get -y update
+apt-get -y install nginx</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -eux)"><br>
+</div><h1 id="nginx-conf">nginx.conf</h1>
+<h2 id="nginx-ip-basic-">nginxでIP制限とBasic認証を併用する</h2>
+<p>IP制限のルールにマッチしない場合はBASIC認証を行う</p>
+<div class="code"><pre class="line-numbers">
+<code class="language-nginx" data-config='{"language":"nginx"}'>http {
+    get $access_allowed {
+        default disable;
+        127.0.0.1 allow;
+        192.168.0.0/24 allow;    
+    }
 
-$ sudo apt update
-$ sudo apt install nginx</code></pre>
+    # IP制限のみ
+    server {
+        listen       80;
+        server_name  _;
+
+        if ($access_allowed = "disable") { return 403; }
+
+        location / {
+            proxy_set_header Host            $http_host;
+            proxy_set_header X-Real-IP       $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            # proxy_set_header X-Forwarded-Proto 'https';
+            proxy_pass http://127.0.0.1:8001;
+        }
+    }
+
+    # IP制限とBASIC認証
+    server {
+        listen       80;
+        server_name  _;
+
+        set $realm off;
+        if ( $access_allowed = "disable" ) {
+            set $realm "Restricted";
+        }
+        auth_basic $realm;
+        auth_basic_user_file /etc/nginx/htpasswd;
+
+        location / {
+            proxy_set_header Host            $http_host;
+            proxy_set_header X-Real-IP       $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            # proxy_set_header X-Forwarded-Proto 'https';
+            proxy_pass http://127.0.0.1:8001;
+        }
+    }
+}</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+</div><p>htpasswdは debian系ならば apache2-utils にある</p>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{}'>htpasswd -c /etc/nginx/htpasswd [USERNAME]</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
 </div>

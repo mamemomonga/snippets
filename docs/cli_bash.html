@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title></title>
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" type="text/css" href="prism.css" media="all">
+<link rel="stylesheet" type="text/css" href="index.css" media="all">
+<script src="prism.js"></script>
+<script src="index.js"></script>
+</head>
+<body>
+
+<div class="container">
+<a href="index.html">INDEX</a> | <a href="https://github.com/mamemomonga/snippets">GitHub</a><hr>
+<h1 id="bash-">bash メモ</h1>
+<p>Bourne Shell系で使えるシェルスクリプトチートブック</p>
+<h2 id="bash-">bashオプション</h2>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{}'>set -eu
+
+bash -eu script.sh</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+</div><ul>
+<li>-e コマンドが0以外のステータスで終了した場合，一部の場合を除いて即座に終了する</li>
+<li>-u 未定義の変数を参照するとエラー・メッセージを表示する</li>
+<li>-x 実行内容を表示</li>
+<li>-n 文法チェックのみ行う</li>
+<li>-v コマンドを実行する前に入力行を表示する</li>
+<li>-o オプション -o pipefail パイプが失敗したとき停止する</li>
+</ul>
+<p>-u オプションを使用する場合、未定義変数を正しく処理するため、${1:-}とするとよい。
+$1が空なら空のままであるという意味。</p>
+<h2 id="bash-">bashの変数</h2>
+<p>パラメータ変数</p>
+<table>
+<thead>
+<tr>
+<th>書式</th>
+<th>内容　</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$0</td>
+<td>スクリプト名</td>
+</tr>
+<tr>
+<td>$$</td>
+<td>プロセスID</td>
+</tr>
+<tr>
+<td>$#</td>
+<td>パラメータ数</td>
+</tr>
+<tr>
+<td>$1,$2...</td>
+<td>パラメータ</td>
+</tr>
+<tr>
+<td>$*</td>
+<td>$IFSで分割された全パラメータ</td>
+</tr>
+<tr>
+<td>$@</td>
+<td>スペースで区切られたパラメータ</td>
+</tr>
+<tr>
+<td>$?</td>
+<td>最後に実行したフォアグラウンドコマンドの終了ステータス</td>
+</tr>
+<tr>
+<td>$!</td>
+<td>最後に実行したバックグラウンドコマンドのプロセスID</td>
+</tr>
+<tr>
+<td>$-</td>
+<td>現在のbashのオプションフラグ</td>
+</tr>
+</tbody>
+</table>
+<p>変数展開</p>
+<table>
+<thead>
+<tr>
+<th>書式</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>${変数名:-文字列}</td>
+<td>変数が未定義または空の場合 文字列に置換</td>
+</tr>
+<tr>
+<td>${変数名:=文字列}</td>
+<td>変数が未定義または空の場合 文字列に置換して変数に代入</td>
+</tr>
+<tr>
+<td>${変数名:?}</td>
+<td>変数が未定義または空の場合 エラー</td>
+</tr>
+<tr>
+<td>${変数名:?エラーメッセージ}</td>
+<td>変数が未定義または空の場合 エラー</td>
+</tr>
+<tr>
+<td>${変数名:開始位置:[長さ]}</td>
+<td>変数から文字列切り出し</td>
+</tr>
+<tr>
+<td>${#変数名}</td>
+<td>変数の文字数</td>
+</tr>
+<tr>
+<td>${変数名#パターン}</td>
+<td>変数の先頭がマッチした場合 最短マッチ部を削除</td>
+</tr>
+<tr>
+<td>${変数名##パターン}</td>
+<td>変数の先頭がマッチした場合 最長マッチ部を削除</td>
+</tr>
+<tr>
+<td>${変数名%パターン}</td>
+<td>変数の末尾がマッチした場合 最短マッチ部を削除</td>
+</tr>
+<tr>
+<td>${変数名%%パターン}</td>
+<td>変数の末尾がマッチした場合 最長マッチ部を削除</td>
+</tr>
+</tbody>
+</table>
+<p>パターンとして使える文字は、* 任意の文字, ? 任意の一文字, [...] 括弧内のいずれか</p>
+<h2 id="-">最初の設定例</h2>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{}'>#!/bin/bash
+set -euo pipefail
+shopt -s nullglob
+
+1行目: シバン(shebang)
+2行目: 
+   e 実行したコマンドの終了ステータスが0以外だったら終了
+   u 変数未定義だったら終了
+   o pipefail パイプの最後の終了ステータスが0以外だったら終了
+3行目: ファイル名のワイルドカード「*」を常に展開する</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+</div><h2 id="-">ヒアドキュメントをつかって複数行のコードを実行</h2>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{}'>bash -eu << 'EOS'
+echo 'Hello World!'
+EOS</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+</div><p>sudo経由</p>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{}'>sudo bash -eu << 'EOS'
+whoami
+EOS</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+</div><h2 id="-">連番</h2>
+<p>seqを使う</p>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{}'>for i in $(seq 0 10); do
+  echo $i
+done</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+</div><p>bash</p>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{}'>for i in {0..10}; do
+  echo $i
+done</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+</div><h2 id="-">リスト</h2>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{}'>THELIST="hello1 hello2 hello3"
+for i in $THELIST; do
+  echo "[$i]"
+done
+
+
+cat > thelist.txt << 'EOS'
+hello1
+hello2
+hello3
+EOS
+for i in $(cat thelist.txt); do
+  echo "[$i]"
+done
+rm thelist.txt</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+</div><h2 id="-">分岐</h2>
+<h3 id="case">case</h3>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{}'>case 値 in
+  パターン1 ) 処理1 ;;
+  パターン2 ) 処理2 ;;
+  パターン3 ) 処理3 ;;
+  …
+  パターンn ) 処理n ;;
+esac</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+</div><p>readと組み合わせた例</p>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{}'>while true; do
+    read -n1 -p "処理を継続しますか [y/n]? " yn
+    case $yn in
+        [Yy]* ) echo; echo "継続"; break ;;
+        [Nn]* ) echo; echo "終了"; exit  ;;
+        *     ) echo; echo "yまたはnを入力してください" ;;
+    esac
+done</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+</div><h3 id="if">if</h3>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{}'>if [ -n "$(uname | grep 'Darwin')" ]; then
+    echo "macOSです"
+elif [ -n "$(uname | grep 'Linux')" ]; then
+    echo "Linuxです"
+fi</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+</div><h3 id="test">test</h3>
+<p>if の後にある [ が test コマンド</p>
+<table>
+<thead>
+<tr>
+<th>書式</th>
+<th>内容　</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-f file</td>
+<td>ファイルがある</td>
+</tr>
+<tr>
+<td>-n string</td>
+<td>文字列が空ではない</td>
+</tr>
+<tr>
+<td>-z string</td>
+<td>文字列が空である</td>
+</tr>
+<tr>
+<td>s1 = s2</td>
+<td>s1とs2が同じ文字列である</td>
+</tr>
+</tbody>
+</table>
+<p>詳しくは man test</p>
+<h2 id="-">シェルスクリプト例</h2>
+<p>引数でコマンドを実行し、未定義コマンドの場合USAGEを表示</p>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{}'>#!/bin/bash
+set -euo pipefail
+
+action1() {
+    echo "ACTION1"
+    exit 0
+}
+
+action2() {
+    echo "ACTION2"
+    exit 0
+}
+
+usage() {
+    echo "USAGE: $(basename $0) [ action1 | action2 ]"
+    exit 1
+}
+
+case "${1:-}" in
+    "action1" ) action1 ;;
+    "action2" ) action2 ;;
+    *         ) usage   ;;
+esac</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+</div><h2 id="-">カレントディレクトリを得る</h2>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{}'>${0%/*}</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+</div><p>絶対パスでカレントディレクトリを得る</p>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{}'>BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+</div><p>絶対パスで一階層上を得る</p>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{}'>BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )"</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+</div><p>絶対パスで一階層上を取得(OSXは使えない)</p>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{}'>BASEDIR=$(readlink -f $(dirname "$0")/..)</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+</div><p>絶対パスで一階層上を取得(Perlを使う)</p>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{}'>BASEDIR=$( perl -MCwd -MFile::Basename -e 'print Cwd::abs_path(dirname($ARGV[0])."/../")' $0)</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+</div><h2 id="1-">1列目を取得</h2>
+<p>awkももっとも簡単な使用例。awkはオークと読むらしい</p>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{}'>cat hoge.txt | awk '{print $1}'</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+</div><h2 id="nobody-">nobodyユーザで実行したい</h2>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{}'>#!/bin/bash
+set -eux
+run_user() {
+  whoami
+}
+run() {
+  local func=$(declare -f run_user)
+  sudo -u nobody bash -euxc "$func; run_user"
+}
+run</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+</div><h2 id="-">スクリプトの読み込み</h2>
+<h3 id="-">別のファイルを読み込む</h3>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{}'>source ./script.sh</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+</div><p>または</p>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{}'>. ./script.sh</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+</div><p>変数 BASH_SOURCE には 読み込んだスクリプトのファイル名が入っている。</p>
+<h3 id="-">文字列をコードとして解釈する</h3>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{}'>THECODE="echo 'Hello World'"
+eval $THECODE</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+</div><h2 id="-">リダイレクトメモ</h2>
+<ul>
+<li>1: STDOUT</li>
+<li>2: STDERR</li>
+</ul>
+<p>使用例</p>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{}'>thescript > /dev/null 2>&1</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+</div><table>
+<thead>
+<tr>
+<th>書式</th>
+<th>内容　</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2&gt;&amp;1</td>
+<td>STDERRをSTDOUTで出力</td>
+</tr>
+<tr>
+<td>2&gt;/dev/null</td>
+<td>STDERRを出力しない</td>
+</tr>
+<tr>
+<td>1&gt;/dev/null</td>
+<td>STDOUTを出力しない</td>
+</tr>
+<tr>
+<td>&gt;/dev/null</td>
+<td>1&gt;/dev/null と同じ</td>
+</tr>
+</tbody>
+</table>
+<h3 id="-">画面出力と同時にファイルにも書き出す</h3>
+<ul>
+<li><strong>>( command_list )</strong> はbashの機能で Process Substitution(プロセス置換)、command_listをファイル(名前付きパイプ)のように扱える。</li>
+</ul>
+<p>例</p>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{}'>#!/bin/bash
+set -eu
+
+exec 1> >( tee hello.txt )
+exec 2>&1
+
+date +'%Y-%m-%d %H:%M:%S'
+echo "Hello World!"</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+</div><h2 id="-">時間と日付</h2>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{}'>date +'%Y-%m-%d %H:%M:%S'
+date +'%y%m%d_%H%M%S'</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+</div><p>man strftime</p>
+<h2 id="-perl-">ランダムなパスワードを生成する(Perlワンライナー)</h2>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{}'>#!/bin/bash
+set -eu
+
+PASSWORD=$(perl -e 'my @chars; for(my $i=0;$i<$ARGV[1];$i++) { push @chars,substr($ARGV[0],int(rand()*length($ARGV[0])),1) }; print join("",@chars);' 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789-_().!' 32)
+
+echo "PASSWORD: $PASSWORD"</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+</div><h2 id="-">標準入力から行毎に読み込む</h2>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{}'>while read line; do
+    echo "[$line]"
+done < "${1:-/dev/stdin}"</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+</div>
+<hr><a href="index.html">INDEX</a> | <a href="https://github.com/mamemomonga/snippets">GitHub</a>
+</div>
+
+</body>
+</html>

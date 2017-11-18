@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title></title>
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" type="text/css" href="prism.css" media="all">
+<link rel="stylesheet" type="text/css" href="index.css" media="all">
+<script src="prism.js"></script>
+<script src="index.js"></script>
+</head>
+<body>
+
+<div class="container">
+<a href="index.html">INDEX</a> | <a href="https://github.com/mamemomonga/snippets">GitHub</a><hr>
+<h1 id="jq">jq</h1>
+<p>JSONのデータを表示・加工できます。</p>
+<p><a href="https://stedolan.github.io/jq/manual/">https://stedolan.github.io/jq/manual/</a></p>
+<h2 id="-">値の追加</h2>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{}'>echo '{"hoge":"moge"}' > data1.json && cat data1.json
+cat data1.json | jq '.+{"tada":"dada"}' > data2.json && cat data2.json
+cat data2.json | jq 'del(.hoge)' > data3.json && cat data3.json</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+</div>
+<hr><a href="index.html">INDEX</a> | <a href="https://github.com/mamemomonga/snippets">GitHub</a>
+</div>
+
+</body>
+</html>
