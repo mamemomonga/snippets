@@ -27,7 +27,7 @@
 	# {"wrap":"cat > Hello.txt"}
 	こんにちは！
 
-#### PLACEHOLDER:[テキストエリア] は PLACEHOLDERを置換してコピーします
+#### PLACEHOLDER:[テキストエリア] は PLACEHOLDERを置換します
 
 	# {"placeholder":"THE_UFO"}
 	あなたは衝撃のTHE_UFOを見たことがありますか？

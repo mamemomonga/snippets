@@ -22,7 +22,7 @@ export default ()=>{
 		return `<div>${placeholder}<pre class="line-numbers">
 <code class="language-${language}" data-config='${config_text}'>${code}</code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="${bt_text}"><br>
-<div class="copyarea"></div>
+<pre><code class="copyarea"></code></pre>
 </div>`;
 	}
 	return renderer;

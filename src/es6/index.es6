@@ -1,9 +1,9 @@
 // vim:ft=javascript
 
+// コピペの達人
 class CopipeMeister {
 
-	constructor() {
-	}
+	constructor(){}
 
 	node_to_clipboard(node) {
 		const s = window.getSelection();
@@ -23,8 +23,14 @@ class CopipeMeister {
 			text=config.wrap +" << 'END_OF_SNIPPET'\n" + text + "END_OF_SNIPPET\n"
 		}
 		ncp.innerText=text;
+
+		ncp.style.display="block"
 		this.node_to_clipboard(ncp)	
-		setTimeout(()=>{ ncp.innerText="" },1000);
+
+		setTimeout(()=>{
+			ncp.innerText=""
+			ncp.style.display="none"
+		},3000);
 	}
 
 	text_placeholder_change(node) {

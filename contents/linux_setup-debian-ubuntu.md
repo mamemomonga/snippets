@@ -1,10 +1,5 @@
 # Linux: Debian Jessie(8.x), Ubuntu xenial(14.04) の設定
 
-## text
-
-	# { "wrap":"cat > hello.txt" }
-	Hello World!
-
 ## sudo
 
 ユーザ「wheel」をパスワードなしでrootになれるユーザにする
