@@ -6,6 +6,4 @@ https://mamemomonga.github.io/snippets/
 
 * [Prism.js](http://prismjs.com)
 
-# Licence
 
-MIT
