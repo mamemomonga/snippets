@@ -2,14 +2,14 @@ body {
 	font-family: sans-serif;
 }
 .container {
-	max-width: 800px;
+	max-width: 900px;
 	margin: 10px auto;
 	padding: 40px 80px;
 	border: 1px solid #DDDDDD;
 }
 
 h1 {
-	border: 1px solid #DDDDDD;
+	background-color:#EEEEEE;
 	padding: 10px;
 }
 
