@@ -12,35 +12,38 @@
 <body>
 
 <div class="container">
-<a href="index.html">INDEX</a> | <a href="https://github.com/mamemomonga/snippets">GitHub</a><br>
-
+<a href="index.html">INDEX</a> | <a href="https://github.com/mamemomonga/snippets">GitHub</a><hr>
 <h1 id="-">コピペが便利なスニペット集</h1>
 <p>コピペが便利なスニペット集です</p>
 <h1 id="-">ページ一覧</h1>
 <ul>
 <li><a href="linux_setup-debian-ubuntu.html">Linux: Debian Jessie(8.x), Ubuntu xenial(14.04) の設定</a></li>
-<li><a href="mastodon_posts.html">Mastodon: ポスト</a></li>
+<li><a href="linux_nginx.html">Linux: nginx</a></li>
+<li><p><a href="linux_mariadb.html">Linux: MariaDB</a></p>
+</li>
+<li><p><a href="mastodon_posts.html">Mastodon: ポスト</a></p>
+</li>
 </ul>
 <h1 id="-">使い方</h1>
 <h4 id="-">[コピー] ボタンを押すと、テキストがクリップボードにコピーされます</h4>
 <p>例</p>
-<div><pre class="line-numbers">
+<div class="code"><pre class="line-numbers">
 <code class="language-bash" data-config='{}'>Example</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
 </div><h4 id="-command-">[コピー (command)] は、シェルスクリプトのヒアドキュメントとしてラップされます</h4>
 <p>例1</p>
-<div><pre class="line-numbers">
+<div class="code"><pre class="line-numbers">
 <code class="language-bash" data-config='{"wrap":"bash -xeu"}'>echo "こんにちは！"</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー (bash -xeu)"><br>
 </div><p>例2</p>
-<div><pre class="line-numbers">
+<div class="code"><pre class="line-numbers">
 <code class="language-bash" data-config='{"wrap":"cat > Hello.txt"}'>こんにちは！</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー (cat > Hello.txt)"><br>
 </div><h4 id="placeholder-placeholder-">PLACEHOLDER:[テキストエリア] は PLACEHOLDERを置換します</h4>
-<div><div class="controlform">THE_UFO: <input type="text" onchange="text_placeholder_change(this)" placeholder="THE_UFO"></div><pre class="line-numbers">
+<div class="code"><div class="controlform">THE_UFO: <input type="text" onchange="text_placeholder_change(this)" placeholder="THE_UFO"></div><pre class="line-numbers">
 <code class="language-bash" data-config='{"placeholder":"THE_UFO"}'>あなたは衝撃のTHE_UFOを見たことがありますか？</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
@@ -48,6 +51,7 @@
 <p>これらは Markdownを少しだけ拡張したものを変換して作成しています、
 <a href="https://github.com/mamemomonga/linux-setup-snippets">ソースはこちら</a>です。</p>
 
+<hr><a href="index.html">INDEX</a> | <a href="https://github.com/mamemomonga/snippets">GitHub</a>
 </div>
 
 </body>

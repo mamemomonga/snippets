@@ -12,13 +12,12 @@
 <body>
 
 <div class="container">
-<a href="index.html">INDEX</a> | <a href="https://github.com/mamemomonga/snippets">GitHub</a><br>
-
+<a href="index.html">INDEX</a> | <a href="https://github.com/mamemomonga/snippets">GitHub</a><hr>
 <h1 id="linux-debian-jessie-8-x-ubuntu-xenial-14-04-">Linux: Debian Jessie(8.x), Ubuntu xenial(14.04) の設定</h1>
 <h2 id="sudo">sudo</h2>
 <p>ユーザ「wheel」をパスワードなしでrootになれるユーザにする</p>
 <p>rootで実行</p>
-<div><pre class="line-numbers">
+<div class="code"><pre class="line-numbers">
 <code class="language-bash" data-config='{ "wrap":"bash -xeu" }'>DEBIAN_FRONTEND=noninteractive apt-get install -y sudo
 cat > /etc/sudoers.d/wheel_user << 'EOS'
 wheel ALL=(ALL) NOPASSWD:ALL
@@ -27,7 +26,7 @@ chmod 600 /etc/sudoers.d/wheel_user</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー (bash -xeu)"><br>
 </div><h2 id="-the_new_hostname-">ホスト名を「THE_NEW_HOSTNAME」に設定する</h2>
-<div><div class="controlform">THE_NEW_HOSTNAME: <input type="text" onchange="text_placeholder_change(this)" placeholder="THE_NEW_HOSTNAME"></div><pre class="line-numbers">
+<div class="code"><div class="controlform">THE_NEW_HOSTNAME: <input type="text" onchange="text_placeholder_change(this)" placeholder="THE_NEW_HOSTNAME"></div><pre class="line-numbers">
 <code class="language-bash" data-config='{ "wrap":"sudo bash -xeu","placeholder":"THE_NEW_HOSTNAME" }'>NEW_HOSTNAME="THE_NEW_HOSTNAME"
 echo "$NEW_HOSTNAME" > /etc/hostname
 echo "127.0.0.1 localhost $NEW_HOSTNAME" > /tmp/hosts
@@ -38,7 +37,7 @@ reboot</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
 </div><h2 id="-">ローカルタイムを日本時間にする</h2>
-<div><pre class="line-numbers">
+<div class="code"><pre class="line-numbers">
 <code class="language-bash" data-config='{ "wrap":"sudo bash -xeu" }'>rm /etc/localtime
 ln -s /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 echo 'Asia/Tokyo' > /etc/timezone
@@ -46,7 +45,7 @@ date</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
 </div><h2 id="-">ロケールが日本語だったら英語にする</h2>
-<div><pre class="line-numbers">
+<div class="code"><pre class="line-numbers">
 <code class="language-bash" data-config='{ "wrap":"sudo bash -xeu" }'>if [ "$LANG" = "ja_JP.UTF-8" ]; then
     sed -i '/^# en_US.UTF-8 UTF-8/s/^# //' /etc/locale.gen
     locale-gen
@@ -55,7 +54,7 @@ fi</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
 </div><h2 id="git-curl-wget">git, curl, wget</h2>
-<div><pre class="line-numbers">
+<div class="code"><pre class="line-numbers">
 <code class="language-bash" data-config='{ "wrap":"sudo bash -xeu" }'>export DEBIAN_FRONTEND=noninteractive
 apt-get update
 apt-get -y upgrade
@@ -63,12 +62,12 @@ apt-get install -y git-core curl wget</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
 </div><h2 id="build-essential">build-essential</h2>
-<div><pre class="line-numbers">
-<code class="language-bash" data-config='{ }'>sudo sh -c 'DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential'</code></pre>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{}'>sudo sh -c 'DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential'</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
 </div><h2 id="vim">vim</h2>
-<div><pre class="line-numbers">
+<div class="code"><pre class="line-numbers">
 <code class="language-bash" data-config='{ "wrap":"sudo bash -xeu" }'>DEBIAN_FRONTEND=noninteractive apt-get install -y vim
 cat > /etc/vim/vimrc.local << 'EOS'
 syntax on
@@ -90,7 +89,7 @@ sudo sh -c "echo '3' | update-alternatives --config editor"</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
 </div><h2 id="ntp">NTP</h2>
-<div><pre class="line-numbers">
+<div class="code"><pre class="line-numbers">
 <code class="language-bash" data-config='{ "wrap":"sudo bash -xeu" }'>DEBIAN_FRONTEND=noninteractive apt-get install -y ntp
 mv /etc/ntp.conf /etc/ntp.conf.orig
 
@@ -129,7 +128,7 @@ ntpq -p</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
 </div><h1 id="postfix">postfix</h1>
-<div><pre class="line-numbers">
+<div class="code"><pre class="line-numbers">
 <code class="language-bash" data-config='{ "wrap":"sudo bash -xeu" }'>DEBIAN_FRONTEND=noninteractive apt-get install -y postfix
 sed -i.bak -e 's/^\(inet_protocols = all\)/#\1/' /etc/postfix/main.cf
 echo 'inet_protocols = ipv4' >> /etc/postfix/main.cf
@@ -137,6 +136,7 @@ service postfix restart</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
 </div>
+<hr><a href="index.html">INDEX</a> | <a href="https://github.com/mamemomonga/snippets">GitHub</a>
 </div>
 
 </body>

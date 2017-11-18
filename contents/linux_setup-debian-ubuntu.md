@@ -6,7 +6,7 @@
 
 rootで実行
 
-	# { "wrap":"bash -xeu" }
+	#-- { "wrap":"bash -xeu" }
 	DEBIAN_FRONTEND=noninteractive apt-get install -y sudo
 	cat > /etc/sudoers.d/wheel_user << 'EOS'
 	wheel ALL=(ALL) NOPASSWD:ALL
@@ -15,7 +15,7 @@ rootで実行
 
 ## ホスト名を「THE_NEW_HOSTNAME」に設定する
 
-	# { "wrap":"sudo bash -xeu","placeholder":"THE_NEW_HOSTNAME" }
+	#-- { "wrap":"sudo bash -xeu","placeholder":"THE_NEW_HOSTNAME" }
 	NEW_HOSTNAME="THE_NEW_HOSTNAME"
 	echo "$NEW_HOSTNAME" > /etc/hostname
 	echo "127.0.0.1 localhost $NEW_HOSTNAME" > /tmp/hosts
@@ -26,7 +26,7 @@ rootで実行
 
 ## ローカルタイムを日本時間にする
 
-	# { "wrap":"sudo bash -xeu" }
+	#-- { "wrap":"sudo bash -xeu" }
 	rm /etc/localtime
 	ln -s /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 	echo 'Asia/Tokyo' > /etc/timezone
@@ -34,7 +34,7 @@ rootで実行
 
 ## ロケールが日本語だったら英語にする
 
-	# { "wrap":"sudo bash -xeu" }
+	#-- { "wrap":"sudo bash -xeu" }
 	if [ "$LANG" = "ja_JP.UTF-8" ]; then
 		sed -i '/^# en_US.UTF-8 UTF-8/s/^# //' /etc/locale.gen
 		locale-gen
@@ -43,7 +43,7 @@ rootで実行
 
 ## git, curl, wget
 
-	# { "wrap":"sudo bash -xeu" }
+	#-- { "wrap":"sudo bash -xeu" }
 	export DEBIAN_FRONTEND=noninteractive
 	apt-get update
 	apt-get -y upgrade
@@ -51,12 +51,11 @@ rootで実行
 
 ## build-essential
 
-	# { }
 	sudo sh -c 'DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential'
 
 ## vim
 
-	# { "wrap":"sudo bash -xeu" }
+	#-- { "wrap":"sudo bash -xeu" }
 	DEBIAN_FRONTEND=noninteractive apt-get install -y vim
 	cat > /etc/vim/vimrc.local << 'EOS'
 	syntax on
@@ -78,7 +77,7 @@ rootで実行
 
 ## NTP
 
-	# { "wrap":"sudo bash -xeu" }
+	#-- { "wrap":"sudo bash -xeu" }
 	DEBIAN_FRONTEND=noninteractive apt-get install -y ntp
 	mv /etc/ntp.conf /etc/ntp.conf.orig
 
@@ -118,7 +117,7 @@ rootで実行
 
 # postfix
 
-	# { "wrap":"sudo bash -xeu" }
+	#-- { "wrap":"sudo bash -xeu" }
 	DEBIAN_FRONTEND=noninteractive apt-get install -y postfix
 	sed -i.bak -e 's/^\(inet_protocols = all\)/#\1/' /etc/postfix/main.cf
 	echo 'inet_protocols = ipv4' >> /etc/postfix/main.cf

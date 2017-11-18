@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title></title>
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" type="text/css" href="prism.css" media="all">
+<link rel="stylesheet" type="text/css" href="index.css" media="all">
+<script src="prism.js"></script>
+<script src="index.js"></script>
+</head>
+<body>
+
+<div class="container">
+<a href="index.html">INDEX</a> | <a href="https://github.com/mamemomonga/snippets">GitHub</a><hr>
+<h1 id="mariadb">MariaDB</h1>
+<p><a href="https://downloads.mariadb.org/mariadb/repositories/">MariaDB repository configuration tool</a></p>
+<h2 id="mariadb-10-1-debian-8-jessie">MariaDB 10.1 Debian 8 Jessie</h2>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{}'>sudo apt-get -y install software-properties-common
+sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
+sudo add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://ftp.yz.yamagata-u.ac.jp/pub/dbms/mariadb/repo/10.1/debian jessie main'
+sudo apt-get update
+sudo apt-get install mariadb-server</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+</div><h2 id="mariadb-10-1-ubuntu-16-04-lts-xenial">MariaDB 10.1 Ubuntu 16.04 LTS xenial</h2>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{}'>sudo apt-get install software-properties-common
+sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
+sudo add-apt-repository 'deb [arch=amd64,i386,ppc64el] http://ftp.yz.yamagata-u.ac.jp/pub/dbms/mariadb/repo/10.1/ubuntu xenial main'
+sudo apt update
+sudo apt install mariadb-server</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+</div><h2 id="mysql-">MySQLのルートパスワードを自動設定する</h2>
+<p>ランダムなパスワードを生成し、それをMySQL rootパスワードとして設定する。また、UNIX rootユーザの場合パスワードレスでログインできるように、/root/.my.cnfにパスワードを保存する。</p>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{"wrap":"sudo bash -xeu"}'>MYSQLPASSWORD=$(perl -e 'my @chars; for(my $i=0;$i<$ARGV[1];$i++) { push @chars,substr($ARGV[0],int(rand()*length($ARGV[0])),1) }; print join("",@chars);' 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789-_().!' 32)
+mysqladmin password "$MYSQLPASSWORD"
+echo '[client]' > /root/.my.cnf
+echo 'user=root' >> /root/.my.cnf
+echo "password=$MYSQLPASSWORD" >> /root/.my.cnf
+chmod 600 /root/.my.cnf</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -xeu)"><br>
+</div>
+<hr><a href="index.html">INDEX</a> | <a href="https://github.com/mamemomonga/snippets">GitHub</a>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title></title>
+<meta name="viewport" content="width=device-width">
+<link rel="stylesheet" type="text/css" href="prism.css" media="all">
+<link rel="stylesheet" type="text/css" href="index.css" media="all">
+<script src="prism.js"></script>
+<script src="index.js"></script>
+</head>
+<body>
+
+<div class="container">
+<a href="index.html">INDEX</a> | <a href="https://github.com/mamemomonga/snippets">GitHub</a><hr>
+<h1 id="nginx">nginx</h1>
+<p><a href="https://nginx.org/en/">https://nginx.org/en/</a></p>
+<h3 id="ubuntu">Ubuntu</h3>
+<p>インストール</p>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{"wrap":"sudo bash -eux"}'>. /etc/lsb-release
+cat >> /etc/apt/sources.list << EOT
+# nginx
+deb http://nginx.org/packages/ubuntu/ $DISTRIB_CODENAME nginx
+deb-src http://nginx.org/packages/ubuntu/ $DISTRIB_CODENAME nginx
+EOT
+EOS</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -eux)"><br>
+</div><p>セットアップ</p>
+<div class="code"><pre class="line-numbers">
+<code class="language-bash" data-config='{}'>$ wget https://nginx.org/keys/nginx_signing.key
+$ sudo apt-key add nginx_signing.key
+
+$ sudo apt update
+$ sudo apt install nginx</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+</div>
+<hr><a href="index.html">INDEX</a> | <a href="https://github.com/mamemomonga/snippets">GitHub</a>
+</div>
+
+</body>
+</html>

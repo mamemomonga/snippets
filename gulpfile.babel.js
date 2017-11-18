@@ -3,8 +3,8 @@ import webserver from 'gulp-webserver'
 
 import marked from 'gulp-marked'
 
-import ejs_sandwitch from './src/gulp-ejs-sandwitch.es6';
-import marked_renderer from './src/marked-renderer.es6';
+import ejs_sandwitch from './src/es6/gulp-ejs-sandwitch.es6';
+import marked_renderer from './src/es6/marked-renderer.es6';
 
 import webpack from 'webpack-stream'
 import UglifyJSPlugin from 'uglifyjs-webpack-plugin'
