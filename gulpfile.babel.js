@@ -20,13 +20,13 @@ gulp.task('es6',()=>{
 			plugins: [ new UglifyJSPlugin() ],
 			module:  { loaders:[{ test: /\.es6$/, loader:'babel-loader'}]}
 		}))
-		.pipe(gulp.dest('./docs'));
+		.pipe(gulp.dest('./docs/assets'));
 })
 
 // assets
 gulp.task('assets',()=>{
 	return gulp.src(asset_files,{ base: './src' })
-	.pipe(gulp.dest('./docs'))
+	.pipe(gulp.dest('./docs/assets'))
 });
 
 // convert
