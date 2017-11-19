@@ -148,14 +148,14 @@ shopt -s nullglob
 <input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
 </div><h2 id="-">ヒアドキュメントをつかって複数行のコードを実行</h2>
 <div class="code"><pre class="">
-<code class="language-bash" data-config='{}'>bash -eu << 'EOS'
-echo 'Hello World!'
+<code class="language-bash" data-config='{}'>bash -eu &lt;&lt; &#39;EOS&#39;
+echo &#39;Hello World!&#39;
 EOS</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
 </div><p>sudo経由</p>
 <div class="code"><pre class="">
-<code class="language-bash" data-config='{}'>sudo bash -eu << 'EOS'
+<code class="language-bash" data-config='{}'>sudo bash -eu &lt;&lt; &#39;EOS&#39;
 whoami
 EOS</code></pre>
 <pre><code class="copyarea"></code></pre>
@@ -177,19 +177,19 @@ done</code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
 </div><h2 id="-">リスト</h2>
 <div class="code"><pre class="">
-<code class="language-bash" data-config='{}'>THELIST="hello1 hello2 hello3"
+<code class="language-bash" data-config='{}'>THELIST=&quot;hello1 hello2 hello3&quot;
 for i in $THELIST; do
-  echo "[$i]"
+  echo &quot;[$i]&quot;
 done
 
 
-cat > thelist.txt << 'EOS'
+cat &gt; thelist.txt &lt;&lt; &#39;EOS&#39;
 hello1
 hello2
 hello3
 EOS
 for i in $(cat thelist.txt); do
-  echo "[$i]"
+  echo &quot;[$i]&quot;
 done
 rm thelist.txt</code></pre>
 <pre><code class="copyarea"></code></pre>
@@ -209,21 +209,21 @@ esac</code></pre>
 </div><p>readと組み合わせた例</p>
 <div class="code"><pre class="">
 <code class="language-bash" data-config='{}'>while true; do
-    read -n1 -p "処理を継続しますか [y/n]? " yn
+    read -n1 -p &quot;処理を継続しますか [y/n]? &quot; yn
     case $yn in
-        [Yy]* ) echo; echo "継続"; break ;;
-        [Nn]* ) echo; echo "終了"; exit  ;;
-        *     ) echo; echo "yまたはnを入力してください" ;;
+        [Yy]* ) echo; echo &quot;継続&quot;; break ;;
+        [Nn]* ) echo; echo &quot;終了&quot;; exit  ;;
+        *     ) echo; echo &quot;yまたはnを入力してください&quot; ;;
     esac
 done</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
 </div><h3 id="if">if</h3>
 <div class="code"><pre class="">
-<code class="language-bash" data-config='{}'>if [ -n "$(uname | grep 'Darwin')" ]; then
-    echo "macOSです"
-elif [ -n "$(uname | grep 'Linux')" ]; then
-    echo "Linuxです"
+<code class="language-bash" data-config='{}'>if [ -n &quot;$(uname | grep &#39;Darwin&#39;)&quot; ]; then
+    echo &quot;macOSです&quot;
+elif [ -n &quot;$(uname | grep &#39;Linux&#39;)&quot; ]; then
+    echo &quot;Linuxです&quot;
 fi</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
@@ -263,23 +263,23 @@ fi</code></pre>
 set -euo pipefail
 
 action1() {
-    echo "ACTION1"
+    echo &quot;ACTION1&quot;
     exit 0
 }
 
 action2() {
-    echo "ACTION2"
+    echo &quot;ACTION2&quot;
     exit 0
 }
 
 usage() {
-    echo "USAGE: $(basename $0) [ action1 | action2 ]"
+    echo &quot;USAGE: $(basename $0) [ action1 | action2 ]&quot;
     exit 1
 }
 
-case "${1:-}" in
-    "action1" ) action1 ;;
-    "action2" ) action2 ;;
+case &quot;${1:-}&quot; in
+    &quot;action1&quot; ) action1 ;;
+    &quot;action2&quot; ) action2 ;;
     *         ) usage   ;;
 esac</code></pre>
 <pre><code class="copyarea"></code></pre>
@@ -291,28 +291,28 @@ esac</code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
 </div><p>絶対パスでカレントディレクトリを得る</p>
 <div class="code"><pre class="">
-<code class="language-bash" data-config='{}'>BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"</code></pre>
+<code class="language-bash" data-config='{}'>BASEDIR=&quot;$( cd &quot;$( dirname &quot;${BASH_SOURCE[0]}&quot; )&quot; &amp;&amp; pwd )&quot;</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
 </div><p>絶対パスで一階層上を得る</p>
 <div class="code"><pre class="">
-<code class="language-bash" data-config='{}'>BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )"</code></pre>
+<code class="language-bash" data-config='{}'>BASEDIR=&quot;$( cd &quot;$( dirname &quot;${BASH_SOURCE[0]}&quot; )&quot; &amp;&amp; cd .. &amp;&amp; pwd )&quot;</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
 </div><p>絶対パスで一階層上を取得(OSXは使えない)</p>
 <div class="code"><pre class="">
-<code class="language-bash" data-config='{}'>BASEDIR=$(readlink -f $(dirname "$0")/..)</code></pre>
+<code class="language-bash" data-config='{}'>BASEDIR=$(readlink -f $(dirname &quot;$0&quot;)/..)</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
 </div><p>絶対パスで一階層上を取得(Perlを使う)</p>
 <div class="code"><pre class="">
-<code class="language-bash" data-config='{}'>BASEDIR=$( perl -MCwd -MFile::Basename -e 'print Cwd::abs_path(dirname($ARGV[0])."/../")' $0)</code></pre>
+<code class="language-bash" data-config='{}'>BASEDIR=$( perl -MCwd -MFile::Basename -e &#39;print Cwd::abs_path(dirname($ARGV[0]).&quot;/../&quot;)&#39; $0)</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
 </div><h2 id="1-">1列目を取得</h2>
 <p>awkももっとも簡単な使用例。awkはオークと読むらしい</p>
 <div class="code"><pre class="">
-<code class="language-bash" data-config='{}'>cat hoge.txt | awk '{print $1}'</code></pre>
+<code class="language-bash" data-config='{}'>cat hoge.txt | awk &#39;{print $1}&#39;</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
 </div><h2 id="nobody-">nobodyユーザで実行したい</h2>
@@ -324,7 +324,7 @@ run_user() {
 }
 run() {
   local func=$(declare -f run_user)
-  sudo -u nobody bash -euxc "$func; run_user"
+  sudo -u nobody bash -euxc &quot;$func; run_user&quot;
 }
 run</code></pre>
 <pre><code class="copyarea"></code></pre>
@@ -343,7 +343,7 @@ run</code></pre>
 </div><p>変数 BASH_SOURCE には 読み込んだスクリプトのファイル名が入っている。</p>
 <h3 id="-">文字列をコードとして解釈する</h3>
 <div class="code"><pre class="">
-<code class="language-bash" data-config='{}'>THECODE="echo 'Hello World'"
+<code class="language-bash" data-config='{}'>THECODE=&quot;echo &#39;Hello World&#39;&quot;
 eval $THECODE</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
@@ -354,7 +354,7 @@ eval $THECODE</code></pre>
 </ul>
 <p>使用例</p>
 <div class="code"><pre class="">
-<code class="language-bash" data-config='{}'>thescript > /dev/null 2>&1</code></pre>
+<code class="language-bash" data-config='{}'>thescript &gt; /dev/null 2&gt;&amp;1</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
 </div><table>
@@ -392,17 +392,17 @@ eval $THECODE</code></pre>
 <code class="language-bash" data-config='{}'>#!/bin/bash
 set -eu
 
-exec 1> >( tee hello.txt )
-exec 2>&1
+exec 1&gt; &gt;( tee hello.txt )
+exec 2&gt;&amp;1
 
-date +'%Y-%m-%d %H:%M:%S'
-echo "Hello World!"</code></pre>
+date +&#39;%Y-%m-%d %H:%M:%S&#39;
+echo &quot;Hello World!&quot;</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
 </div><h2 id="-">時間と日付</h2>
 <div class="code"><pre class="">
-<code class="language-bash" data-config='{}'>date +'%Y-%m-%d %H:%M:%S'
-date +'%y%m%d_%H%M%S'</code></pre>
+<code class="language-bash" data-config='{}'>date +&#39;%Y-%m-%d %H:%M:%S&#39;
+date +&#39;%y%m%d_%H%M%S&#39;</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
 </div><p>man strftime</p>
@@ -411,16 +411,16 @@ date +'%y%m%d_%H%M%S'</code></pre>
 <code class="language-bash" data-config='{}'>#!/bin/bash
 set -eu
 
-PASSWORD=$(perl -e 'my @chars; for(my $i=0;$i<$ARGV[1];$i++) { push @chars,substr($ARGV[0],int(rand()*length($ARGV[0])),1) }; print join("",@chars);' 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789-_().!' 32)
+PASSWORD=$(perl -e &#39;my @chars; for(my $i=0;$i&lt;$ARGV[1];$i++) { push @chars,substr($ARGV[0],int(rand()*length($ARGV[0])),1) }; print join(&quot;&quot;,@chars);&#39; &#39;abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789-_().!&#39; 32)
 
-echo "PASSWORD: $PASSWORD"</code></pre>
+echo &quot;PASSWORD: $PASSWORD&quot;</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
 </div><h2 id="-">標準入力から行毎に読み込む</h2>
 <div class="code"><pre class="">
 <code class="language-bash" data-config='{}'>while read line; do
-    echo "[$line]"
-done < "${1:-/dev/stdin}"</code></pre>
+    echo &quot;[$line]&quot;
+done &lt; &quot;${1:-/dev/stdin}&quot;</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
 </div>

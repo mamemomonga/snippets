@@ -1,6 +1,7 @@
 // vim:ft=javascript
 
 import marked from 'marked'
+import escapeHTML from 'escape-html'
 
 export default ()=>{
 	const renderer=new marked.Renderer();
@@ -35,8 +36,9 @@ export default ()=>{
 			placeholder=`<div class="controlform">${c.cfg.placeholder}: <input type="text" onchange="text_placeholder_change(this)" placeholder="${c.cfg.placeholder}"></div>`;
 		}
 
+		const html=escapeHTML(code);
 		return `<div class="code">${placeholder}<pre class="">
-<code class="language-${language}" data-config='${c.raw}'>${code}</code></pre>
+<code class="language-${language}" data-config='${c.raw}'>${html}</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="${bt_text}"><br>
 </div>`;

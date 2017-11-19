@@ -25,13 +25,13 @@
 systemctl stop docker
 
 CONFIGURATION_FILE=$(systemctl show --property=FragmentPath docker | cut -f2 -d=)
-echo "[CONFIGURATION_FILE] $CONFIGURATION_FILE"
+echo &quot;[CONFIGURATION_FILE] $CONFIGURATION_FILE&quot;
 cp $CONFIGURATION_FILE /etc/systemd/system/docker.service
 
-perl -pi -e 's/^(ExecStart=.+)$/$1 -s overlay2/' /etc/systemd/system/docker.service
+perl -pi -e &#39;s/^(ExecStart=.+)$/$1 -s overlay2/&#39; /etc/systemd/system/docker.service
 systemctl daemon-reload
 systemctl start docker
-docker info 2>&1 | grep 'Storage Driver'</code></pre>
+docker info 2&gt;&amp;1 | grep &#39;Storage Driver&#39;</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" onclick="bt_copy_range(this)" value="コピー (sudo bash -eu)"><br>
 </div><p>現在のユーザをdockerコマンドを実行できるようにする</p>
@@ -56,7 +56,7 @@ chmod 755 /usr/local/bin/docker-compose</code></pre>
 <p>新しいディスクを追加する。/dev/xvdf(/dev/sdf)に割り当てるものとする</p>
 <p><strong>割り当てドライブを十分に確認すること</strong></p>
 <div class="code"><pre class="">
-<code class="language-bash" data-config='{"wrap":"sudo bash -xeu"}'>fdisk /dev/xvdf << 'EOS'
+<code class="language-bash" data-config='{"wrap":"sudo bash -xeu"}'>fdisk /dev/xvdf &lt;&lt; &#39;EOS&#39;
 n
 p
 1
@@ -73,10 +73,10 @@ EOS</code></pre>
 $ sudo mount /dev/xvdf1 /mnt
 $ sudo e2label /dev/xvdf1 docker
 $ sudo service docker stop
-$ sudo sh -c 'cp -a /var/lib/docker/* /mnt'
+$ sudo sh -c &#39;cp -a /var/lib/docker/* /mnt&#39;
 $ sudo rm -rf /var/lib/docker
 $ sudo mkdir /var/lib/docker
-$ sudo sh -c 'echo "LABEL=docker /var/lib/docker ext4 defaults,discard 0 0" >> /etc/fstab'
+$ sudo sh -c &#39;echo &quot;LABEL=docker /var/lib/docker ext4 defaults,discard 0 0&quot; &gt;&gt; /etc/fstab&#39;
 $ sudo mount -a
 
 $ ls /var/lib/docker

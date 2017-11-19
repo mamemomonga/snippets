@@ -17,6 +17,7 @@
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
     "ejs": "^2.5.7",
+    "escape-html": "^1.0.3",
     "gulp": "^3.9.1",
     "gulp-marked": "^1.0.0",
     "gulp-util": "^3.0.8",

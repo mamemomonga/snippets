@@ -18,7 +18,7 @@
 <h1 id="ubuntu-">Ubuntuへのインストール</h1>
 <div class="code"><pre class="">
 <code class="language-bash" data-config='{"wrap":"sudo bash -eux"}'>. /etc/lsb-release
-cat >> /etc/apt/sources.list << EOS
+cat &gt;&gt; /etc/apt/sources.list &lt;&lt; EOS
 # nginx
 deb http://nginx.org/packages/ubuntu/ $DISTRIB_CODENAME nginx
 deb-src http://nginx.org/packages/ubuntu/ $DISTRIB_CODENAME nginx
@@ -46,13 +46,13 @@ apt-get -y install nginx</code></pre>
         listen       80;
         server_name  _;
 
-        if ($access_allowed = "disable") { return 403; }
+        if ($access_allowed = &quot;disable&quot;) { return 403; }
 
         location / {
             proxy_set_header Host            $http_host;
             proxy_set_header X-Real-IP       $remote_addr;
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            # proxy_set_header X-Forwarded-Proto 'https';
+            # proxy_set_header X-Forwarded-Proto &#39;https&#39;;
             proxy_pass http://127.0.0.1:8001;
         }
     }
@@ -63,8 +63,8 @@ apt-get -y install nginx</code></pre>
         server_name  _;
 
         set $realm off;
-        if ( $access_allowed = "disable" ) {
-            set $realm "Restricted";
+        if ( $access_allowed = &quot;disable&quot; ) {
+            set $realm &quot;Restricted&quot;;
         }
         auth_basic $realm;
         auth_basic_user_file /etc/nginx/htpasswd;
@@ -73,7 +73,7 @@ apt-get -y install nginx</code></pre>
             proxy_set_header Host            $http_host;
             proxy_set_header X-Real-IP       $remote_addr;
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            # proxy_set_header X-Forwarded-Proto 'https';
+            # proxy_set_header X-Forwarded-Proto &#39;https&#39;;
             proxy_pass http://127.0.0.1:8001;
         }
     }
