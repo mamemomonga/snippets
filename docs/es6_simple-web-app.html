@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title></title>
+<meta name="viewport" content="width=1000px">
+<link rel="stylesheet" type="text/css" href="assets/prism.css" media="all">
+<link rel="stylesheet" type="text/css" href="assets/index.css" media="all">
+<script src="assets/prism.js"></script>
+<script src="assets/index.js"></script>
+</head>
+<body>
+
+<div class="container">
+<a href="index.html">INDEX</a> | <a href="https://github.com/mamemomonga/snippets">GitHub</a><hr>
+<h1 id="ecmascript6-">EcmaScript6 ウェブアプリ</h1>
+<p>gulp + babel + webpackで始めるEcmaScrpit6 Webアプリケーション</p>
+<h3 id="-">事前に用意しておくもの</h3>
+<ul>
+<li>Node.js 8</li>
+<li>jq</li>
+</ul>
+<h2 id="-">プロジェクト作成と簡単な実行</h2>
+<div class="code"><div class="controlform">MY_APP_NAME: <input type="text" onchange="text_placeholder_change(this)" placeholder="MY_APP_NAME"></div><pre class="">
+<code class="language-bash" data-config='{"wrap":"bash -xeu","placeholder":"MY_APP_NAME"}'>mkdir MY_APP_NAME
+cd MY_APP_NAME 
+npm init -y
+npm install -D babel-core babel-loader babel-preset-env gulp
+cat package.json | jq &#39;.scripts.gulp=&quot;gulp&quot;&#39; &gt; tmp &amp;&amp; mv tmp package.json
+
+cat &gt; .babelrc &lt;&lt; &#39;EOS&#39;
+{
+  &quot;presets&quot;: [
+    [&quot;env&quot;, {
+      &quot;targets&quot;: {
+        &quot;browsers&quot;: [&quot;last 2 versions&quot;, &quot;safari &gt;= 7&quot;]
+      }
+    }]
+  ]
+}
+EOS
+
+cat &gt; gulpfile.babel.js &lt;&lt; &#39;EOS&#39;
+import gulp from &#39;gulp&#39;
+gulp.task(&#39;default&#39;,()=&gt;{
+    console.log(&#39;Hello World!&#39;)
+});
+EOS
+
+npm run gulp</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー (bash -xeu)"><br>
+</div><p>Hello World! が表示されたら成功</p>
+<h2 id="-javascript-">シンプルなJavaScriptアプリケーション</h2>
+<div class="code"><pre class="">
+<code class="language-bash" data-config='{}'>cd MY_APP_NAME</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー"><br>
+</div><p>index.html</p>
+<div class="code"><pre class="">
+<code class="language-bash" data-config='{"wrap":"cat > index.html"}'>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;ja&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;title&gt;&lt;/title&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width&quot;&gt;
+&lt;script src=&quot;./index.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class=&quot;container&quot;&gt;&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー (cat > index.html)"><br>
+</div><p>index.es6</p>
+<div class="code"><pre class="">
+<code class="language-bash" data-config='{"wrap":"cat > index.es6"}'>// vim:ft=javascript
+import HelloWorld from &#39;./hello_world.es6&#39;;
+window.document.addEventListener(&#39;DOMContentLoaded&#39;,(e)=&gt;{
+    new HelloWorld(e.target).run();
+});</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー (cat > index.es6)"><br>
+</div><p>hello_world.es6</p>
+<div class="code"><pre class="">
+<code class="language-bash" data-config='{"wrap":"cat > hello_world.es6"}'>// vim:ft=javascript
+export default class HelloWorld {
+    constructor(document_obj){
+        console.log(&quot;Start Hello World!&quot;)
+        // this.d=window.document や this.d=documentでもよい
+        this.d=document_obj;
+    }
+    run(){
+        console.log(&quot;run Hello World!&quot;)
+        this.d.title=&quot;*** Hello World! ***&quot;;
+        const c=this.d.getElementsByClassName(&quot;container&quot;);
+        c[0].innerText=&quot;こんにちは世界&quot;;
+    }
+}</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー (cat > hello_world.es6)"><br>
+</div><p>gulpfile.babel.js</p>
+<div class="code"><pre class="">
+<code class="language-bash" data-config='{"wrap":"cat > gulpfile.babel.js"}'>import gulp from &#39;gulp&#39;
+import webpack from &#39;webpack-stream&#39;
+import UglifyJSPlugin from &#39;uglifyjs-webpack-plugin&#39;
+import webserver from &#39;gulp-webserver&#39;
+
+// es6
+gulp.task(&#39;es6&#39;,()=&gt;{
+    return gulp.src(&#39;./index.es6&#39;)
+        .pipe(webpack({
+            output:  { filename: &#39;index.js&#39; },
+            devtool: &#39;source-map&#39;,
+            plugins: [ new UglifyJSPlugin() ],
+            module:  { loaders:[{ test: /\.es6$/, loader:&#39;babel-loader&#39;}]}
+        }))
+        .pipe(gulp.dest(&#39;./&#39;));
+})
+
+// webserver
+gulp.task(&#39;webserver&#39;,() =&gt; {
+    return gulp.src(&#39;./&#39;)
+    .pipe(webserver({
+        liveload: true,
+        directoryListing: true,
+        host: &#39;0.0.0.0&#39;,
+        port: 3000
+    }));
+});
+
+// default
+gulp.task(&#39;default&#39;,[&#39;es6&#39;,&#39;webserver&#39;],()=&gt;{
+    gulp.watch(&#39;./*.es6&#39;, [&#39;es6&#39;]);
+});</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー (cat > gulpfile.babel.js)"><br>
+</div><p>インストールと開始</p>
+<div class="code"><pre class="">
+<code class="language-bash" data-config='{"wrap":"bash -xeu"}'>npm install -D webpack-stream uglifyjs-webpack-plugin gulp-webserver
+npm run gulp</code></pre>
+<pre><code class="copyarea"></code></pre>
+<input type="button" onclick="bt_copy_range(this)" value="コピー (bash -xeu)"><br>
+</div><p><a href="http://localhost:3000/">http://localhost:3000/</a> にアクセスしてページがでてきたら成功</p>
+
+<hr><a href="index.html">INDEX</a> | <a href="https://github.com/mamemomonga/snippets">GitHub</a>
+</div>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-109885867-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109885867-2');
+</script>
+
+</body>
+</html>

@@ -20,7 +20,7 @@ class CopipeMeister {
 		const config = JSON.parse(ncode.dataset.config)
 		let text=ncode.innerText
 		if(config.wrap) {
-			text=config.wrap +" << 'END_OF_SNIPPET'\n" + text + "END_OF_SNIPPET\n"
+			text=config.wrap +" << 'END_OF_SNIPPET'\n" + text + "\nEND_OF_SNIPPET\n"
 		}
 		ncp.innerText=text;
 
@@ -41,7 +41,7 @@ class CopipeMeister {
 		} else {
 			code=codenode.dataset.origcode;
 		}
-		var code=code.replace(node.placeholder,node.value);
+		var code=code.replace(new RegExp(node.placeholder,'mg'),node.value);
 		codenode.innerHTML=code;
 	}
 
