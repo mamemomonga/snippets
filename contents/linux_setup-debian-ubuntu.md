@@ -1,5 +1,7 @@
 # Linux: Debian Jessie(8.x), Ubuntu xenial(14.04) の設定
 
+[nginx](#/linux_nginx)
+
 ## ホスト名変更
 
 ホスト名を「THE_NEW_HOSTNAME」に設定して再起動

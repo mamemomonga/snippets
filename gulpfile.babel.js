@@ -1,60 +1,75 @@
 import gulp from 'gulp'
+import gutil from 'gulp-util'
+import ejs from 'gulp-ejs'
 import webserver from 'gulp-webserver'
-
-import marked from 'gulp-marked'
-
-import ejs_sandwitch from './src/es6/gulp-ejs-sandwitch.es6';
-import marked_renderer from './src/es6/marked-renderer.es6';
-
 import webpack from 'webpack-stream'
 import UglifyJSPlugin from 'uglifyjs-webpack-plugin'
+import fs from 'fs'
+import sass from 'gulp-sass'
 
-const asset_files=['./src/index.css', './src/prism.js', './src/prism.css']
+let production = false
+
+// index
+gulp.task('index',()=>{
+	const css = production ? fs.readFileSync('./var/prod/index.css') : '';
+	const js  = production ? fs.readFileSync('./var/prod/index.js') : '';
+	return gulp.src('./ejs/index.ejs')
+	.pipe(ejs({
+		css: css,
+		js: js,
+ 		production: production,
+	},{},{ ext: '.html' }).on('error', gutil.log))
+	.pipe( gulp.dest( production ? './' : './var/dev' ));
+});
 
 // es6
 gulp.task('es6',()=>{
-	return gulp.src('./src/es6/index.es6')
-		.pipe(webpack({
-			output:  { filename: 'index.js' },
-			devtool: 'source-map',
-			plugins: [ new UglifyJSPlugin() ],
-			module:  { loaders:[{ test: /\.es6$/, loader:'babel-loader'}]}
-		}))
-		.pipe(gulp.dest('./docs/assets'));
+	return gulp.src('./es6/index.es6')
+	.pipe(webpack({
+		output:  { filename: 'index.js' },
+		devtool: production ? undefined : 'inline-source-map',
+		plugins: production ? [ new UglifyJSPlugin() ] : [],
+		module:  { loaders:[{ test: /\.es6$/, loader:'babel-loader'}]}
+	}))
+	.pipe( gulp.dest( production ? './var/prod' : './var/dev' ));
 })
 
-// assets
-gulp.task('assets',()=>{
-	return gulp.src(asset_files,{ base: './src' })
-	.pipe(gulp.dest('./docs/assets'))
-});
-
-// convert
-gulp.task('convert',()=>{
-	return gulp.src('./contents/*.md')
-	.pipe(marked({ renderer: marked_renderer() }))
-	.pipe(ejs_sandwitch({ template: './src/sandwitch.ejs' }))
-    .pipe(gulp.dest('./docs/'))
+// sass
+gulp.task('sass',()=>{
+	return gulp.src('./sass/*.scss')
+	.pipe(sass({
+		outputStyle: production ? 'compressed' : 'expanded'
+	}).on('error',sass.logError))
+	.pipe( gulp.dest( production ? './var/prod' : './var/dev' ));
 });
 
 // build
-gulp.task('build',['convert','assets','es6']);
+gulp.task('build',['es6','sass'],()=>{
+	return gulp.start('index')
+});
+
+// production: productionモードでのbuild
+gulp.task('production',()=>{
+	production=true
+	gulp.start('build')
+	gulp.start('webserver')
+});
 
 // webserver
 gulp.task('webserver',() => {
     return gulp.src('./')
     .pipe(webserver({
-        liveload: true,
-        directoryListing: true,
-        port: 3000,
+	    liveload: true,
+	    directoryListing: true,
+	    port: 3000,
 		host: '0.0.0.0'
     }));
 });
 
-// server
-gulp.task('server',['build','webserver'],()=>{
-	gulp.watch('./contents/*.md',['convert']);
-	gulp.watch('./src/sandwitch.ejs',['convert']);
-	gulp.watch('./src/es6/*.es6',['es6']);
-	gulp.watch(asset_files,['assets']);
+// developemt サーバ
+gulp.task('default',['build','webserver'],()=>{
+	gulp.watch('./es6/*.es6',     ['es6']);
+	gulp.watch('./sass/*.scss',   ['sass']);
+	gulp.watch('./ejs/index.ejs', ['index']);
 });
+

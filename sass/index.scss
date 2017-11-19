@@ -1,8 +1,12 @@
+// vim:ft=css
+@import "./_prism";
+
 body {
 	font-family: sans-serif;
 	font-size:12px;
 }
 .container {
+	display: none;
 	max-width: 800px;
 	margin: 10px auto;
 	padding: 20px 80px;

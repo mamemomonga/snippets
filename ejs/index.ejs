@@ -4,19 +4,26 @@
 <meta charset="utf-8">
 <title>コピペが便利なスニペット集</title>
 <meta name="viewport" content="width=1000px">
-<link rel="stylesheet" type="text/css" href="assets/prism.css" media="all">
-<link rel="stylesheet" type="text/css" href="assets/index.css" media="all">
-<script src="assets/prism.js"></script>
-<script src="assets/index.js"></script>
-</head>
-<body>
 
-<div class="container">
+<% if(production) { %>
+<style type="text/css"><%- css %></style>
+<script id="copipe-meister-conf" type"application/json">{"contents_path":"./contents"}</script>
+<script type="text/javascript">// <![CDATA[
+<%- js %>
+// ]]></script>
+<% } else { %>
+<link rel="stylesheet" type="text/css" href="./index.css" media="all">
+<script id="copipe-meister-conf" type"application/json">{"contents_path":"../../contents"}</script>
+<script src="./index.js"></script>
+<% } %>
+
+</head><body>
+
 <a href="index.html">INDEX</a> | <a href="https://github.com/mamemomonga/snippets">GitHub</a><hr>
-<%- contents %>
+<div class="container"></div>
 <hr><a href="index.html">INDEX</a> | <a href="https://github.com/mamemomonga/snippets">GitHub</a>
-</div>
 
+<% if(production) { %>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-109885867-2"></script>
 <script>
@@ -26,6 +33,7 @@
 
   gtag('config', 'UA-109885867-2');
 </script>
+<% } %>
 
 </body>
 </html>

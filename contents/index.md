@@ -6,23 +6,23 @@
 
 ## Linux, macOS, UNIX系OS
 
-* [Debian Jessie(8.x), Ubuntu xenial(14.04)](linux_setup-debian-ubuntu.html)
-* [nginx](linux_nginx.html)
-* [MariaDB](linux_mariadb.html)
-* [Docker](linux_docker.html)
+* [Debian Jessie(8.x), Ubuntu xenial(14.04)](./linux_setup-debian-ubuntu.md)
+* [nginx](./linux_nginx.md)
+* [MariaDB](./linux_mariadb.md)
+* [Docker](./linux_docker.md)
 
 ## CLIアプリケーション
 
-* [Bash](cli_bash.html)
-* [Jq](cli_jq.html)
+* [Bash](./cli_bash.md)
+* [Jq](./cli_jq.md)
 
 ## EcmaScript6
 
-* [EcmaScrpit6 Webアプリケーション](es6_simple-web-app.html)
+* [EcmaScrpit6 Webアプリケーション](./es6_simple-web-app.md)
 
 ## マストドン
 
-* [Mastodon: ポスト](mastodon_posts.html)
+* [Mastodon: ポスト](./mastodon_posts.md)
 
 
 # このサイトについて
@@ -70,3 +70,4 @@ sh, bash, zshなどのUNIXシェル上にペーストすることで動作しま
 
 これらは Markdownを少しだけ拡張したものを変換して作成しています、
 [ソースはこちら](https://github.com/mamemomonga/snippets)です。
+
