@@ -3,6 +3,7 @@
 import marked from 'marked';
 import escapeHTML from 'escape-html'
 import Prism from 'prismjs'
+import path from 'path'
 
 export default class CopipeMeister {
 
@@ -18,13 +19,13 @@ export default class CopipeMeister {
 		})
 		this.load(this.w.location.hash)
 	}
+
 	load(hash){
+		let filename=( hash.match('^#\!(.+)$') || ['',''] )[1];
+		filename = filename.match('\.md$') ? filename : filename + '/index.md';
+		this.current_filename=filename;
 
-		const hashm=hash.match('^#\!/(.+)$') || ['','index.md'];
-		const path=hashm[1]
-		this.current_path=path
-
-		fetch( this.hconf.contents_path+'/'+path )
+		fetch( this.hconf.contents_path+filename )
 		.then(  (r) => { return r.text() })
 		.then(  (t) => { this.render(t); this.add_events() })
 		.catch( (e) => { console.log(e) })
@@ -83,8 +84,17 @@ export default class CopipeMeister {
 	}
 
 	marked_link(href,title,text) {
-		const hrefm=href.match(/^\.\/(.+)$/);
-		if(hrefm) href=`#!/${hrefm[1]}`
+		const dirname=path.dirname(this.current_filename)
+		const m1=href.match(/^\.\/(.+)$/);
+		const m2=href.match(/^\.\.\/(.+)?$/);
+		if(m1) {
+			href=`#!${dirname}/${m1[1]}`
+		} else if (m2) {
+			const p1=m2[1] || '';
+			const f=path.resolve(dirname,`../${p1}`)
+			href=`#!${f}`
+		}
+
 		return `<a href="${href}" class="el_link">${text}</a>`
 	}
 
