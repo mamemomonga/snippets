@@ -15,6 +15,7 @@
 
 * [Bash](./cli_bash.md)
 * [Jq](./cli_jq.md)
+* [ネット関係](./cli_net.md)
 
 ## EcmaScript6
 
