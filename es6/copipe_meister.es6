@@ -91,7 +91,7 @@ export default class CopipeMeister {
 	marked_code(text){
 		const c=this.parse_code_field(text)
 		const code=c.data;
-		const language = c.cfg.language ? c.cfg.language : 'bash';
+		const language = c.cfg.language ? c.cfg.language : 'none';
 		const bt_text  = c.cfg.wrap     ? `コピー (${c.cfg.wrap})` : 'コピー'
 
 		let placeholder="";
@@ -99,12 +99,14 @@ export default class CopipeMeister {
 			placeholder=`<div class="controlform">${c.cfg.placeholder}: <input type="text" class="el_placeholder" placeholder="${c.cfg.placeholder}"></div>`;
 		}
 
-		const html=escapeHTML(code);
-		const buf=`<div class="code">${placeholder}<pre class="">
-<code class="language-${language}" data-config='${c.raw}'>${html}</code></pre>
+		const buf=`<div class="code">${placeholder}
+<pre>
+<code class="language-${language}" data-config='${escapeHTML(c.raw)}'>${escapeHTML(code)}</code>
+</pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" class="el_copy_text" value="${bt_text}"><br>
 </div>`
+
 		return buf
 	}
 
