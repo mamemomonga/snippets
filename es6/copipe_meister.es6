@@ -10,6 +10,7 @@ export default class CopipeMeister {
 		this.w=window_obj
 		this.d=this.w.document
 		this.hconf=JSON.parse(this.d.getElementById("copipe-meister-conf").textContent)
+		this.dom_contents=this.d.getElementById('contents')
 	}
 	run() {
 		this.w.addEventListener('popstate',(e)=>{
@@ -33,11 +34,10 @@ export default class CopipeMeister {
 		renderer.code=(t,l)=>{return this.marked_code(t) }
 		renderer.link=(a,t,s)=>{ return this.marked_link(a,t,s) }
 
-		const cnt=this.d.getElementsByClassName('container')[0]
-		cnt.innerHTML=marked(text,{renderer:renderer})
+		this.dom_contents.innerHTML=marked(text,{renderer:renderer})
 		Prism.highlightAll(false)
 
-		cnt.style.display='block'
+		this.dom_contents.style.display='block'
 
 	}
 	add_events(){
@@ -59,7 +59,7 @@ export default class CopipeMeister {
 		const ts=t.hash.match('^#\!/(.+)$')
 		if(!ts) return true
 
-		cnt.style.display='hide'
+		// this.dom_contents.style.display='hide'
 		this.load(`${ts[1]}.md`)
 	}
 

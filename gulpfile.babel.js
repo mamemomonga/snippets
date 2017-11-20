@@ -53,6 +53,7 @@ gulp.task('production',()=>{
 	production=true
 	gulp.start('build')
 	gulp.start('webserver')
+	console.log("確認URL: http://localhost:3000/index.html")
 });
 
 // webserver
@@ -71,5 +72,6 @@ gulp.task('default',['build','webserver'],()=>{
 	gulp.watch('./es6/*.es6',     ['es6']);
 	gulp.watch('./sass/*.scss',   ['sass']);
 	gulp.watch('./ejs/index.ejs', ['index']);
+	console.log("確認URL: http://localhost:3000/var/dev/index.html")
 });
 

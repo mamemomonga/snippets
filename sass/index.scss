@@ -6,12 +6,15 @@ body {
 	font-size:12px;
 }
 .container {
-	display: none;
 	max-width: 800px;
 	margin: 10px auto;
 	padding: 20px 80px;
 	border: 1px solid #DDDDDD;
 }
+#contents {
+	display:none;
+}
+
 
 h1 {
 	background-color:#EEEEEE;
