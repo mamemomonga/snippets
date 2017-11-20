@@ -2,7 +2,6 @@
 
 import marked from 'marked';
 import escapeHTML from 'escape-html'
-import Prism from 'prismjs'
 import path from 'path'
 
 export default class CopipeMeister {
@@ -36,8 +35,6 @@ export default class CopipeMeister {
 		renderer.link=(a,t,s)=>{ return this.marked_link(a,t,s) }
 
 		this.dom_contents.innerHTML=marked(text,{renderer:renderer})
-		Prism.highlightAll(false)
-
 		this.dom_contents.style.display='block'
 
 	}
@@ -110,9 +107,7 @@ export default class CopipeMeister {
 		}
 
 		const buf=`<div class="code">${placeholder}
-<pre>
-<code class="language-${language}" data-config='${escapeHTML(c.raw)}'>${escapeHTML(code)}</code>
-</pre>
+<pre class="codearea"><code data-config='${escapeHTML(c.raw)}'>${escapeHTML(code)}</code></pre>
 <pre><code class="copyarea"></code></pre>
 <input type="button" class="el_copy_text" value="${bt_text}"><br>
 </div>`

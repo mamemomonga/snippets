@@ -1,5 +1,4 @@
 // vim:ft=css
-@import "./_prism";
 
 body {
 	font-family: sans-serif;
@@ -15,7 +14,6 @@ body {
 	display:none;
 }
 
-
 h1 {
 	background-color:#EEEEEE;
 	padding: 10px;
@@ -30,6 +28,13 @@ h1 {
 	margin: 10px;
 	padding: 10px;
 	border: 1px solid black;
+	font-size: 12px;
+}
+
+.codearea {
+	color:#FFFFFF;
+	background-color:#000000;
+	padding: 10px;
 	font-size: 12px;
 }
 
