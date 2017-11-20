@@ -140,7 +140,7 @@ export default class CopipeMeister {
 		setTimeout(()=>{
 			ncp.innerText=""
 			ncp.style.display="none"
-		},3000);
+		},1000);
 	}
 
 	text_placeholder_change(node) {
