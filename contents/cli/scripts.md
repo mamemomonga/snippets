@@ -33,8 +33,4 @@
 		echo "[$i]"
 	done
 
-## グローバルIPアドレスの確認
-
-	curl -s httpbin.org/ip | jq -r '.origin'
-
 
