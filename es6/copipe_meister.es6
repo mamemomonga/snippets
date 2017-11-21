@@ -45,22 +45,7 @@ export default class CopipeMeister {
 		Array.from(this.d.getElementsByClassName('el_placeholder')).forEach((d)=>{
 			d.addEventListener('change',(e)=>{ this.text_placeholder_change(e.target) })
 		})
-		Array.from(this.d.getElementsByClassName('el_link')).forEach((d)=>{
-			d.addEventListener('click',(e)=>{ this.ev_click_link(e.target) })
-		})
 	}
-	ev_click_link(t) {
-
-		this.w.history.pushState(null,null,this.w.location.href)
-
-		if(!t.hash) return true
-		const ts=t.hash.match('^#\!/(.+)$')
-		if(!ts) return true
-
-		// this.dom_contents.style.display='hide'
-		this.load(`${ts[1]}.md`)
-	}
-
 	parse_code_field(text){
 		const lines = text.split('\n')
 		const cfgfound = lines[0].match(/^#-- (.+)$/);

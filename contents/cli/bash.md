@@ -266,27 +266,4 @@ awkももっとも簡単な使用例。awkはオークと読むらしい
 	date +'%Y-%m-%d %H:%M:%S'
 	echo "Hello World!"
 
-## 時間と日付
-
-	date +'%Y-%m-%d %H:%M:%S'
-	date +'%y%m%d_%H%M%S'
-
-man strftime
-
-
-## ランダムなパスワードを生成する(Perlワンライナー)
-
-	#!/bin/bash
-	set -eu
-
-	PASSWORD=$(perl -e 'my @chars; for(my $i=0;$i<$ARGV[1];$i++) { push @chars,substr($ARGV[0],int(rand()*length($ARGV[0])),1) }; print join("",@chars);' 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789-_().!' 32)
-
-	echo "PASSWORD: $PASSWORD"
-
-## 標準入力から行毎に読み込む
-
-	while read line; do
-		echo "[$line]"
-	done < "${1:-/dev/stdin}"
-
 
