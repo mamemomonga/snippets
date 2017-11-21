@@ -1,46 +1,80 @@
 // vim:ft=css
 
 body {
-	font-family: sans-serif;
-	font-size:12px;
+	font-size: 14px;
+	font-family:-apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI","Noto Sans Japanese","Hiragino Kaku Gothic ProN","メイリオ", sans-serif;
 }
+
 .container {
-	max-width: 800px;
+	max-width: 700px;
 	margin: 10px auto;
-	padding: 20px 80px;
+	padding: 40px 60px;
 	border: 1px solid #DDDDDD;
+	border-radius: 10px;
 }
 #contents {
 	display:none;
 }
 
 h1 {
-	background-color:#EEEEEE;
+	background-color:#F9F9F9;
 	padding: 10px;
+	font-size: 1.5rem;
 }
 
-.controlform {
-	font-size:12px;
+h2 {
+	background-color:#F9F9F9;
+	padding: 10px;
+	font-size: 1rem;
 }
 
-.copyarea {
-	display: none;
-	margin: 10px;
-	padding: 10px;
-	border: 1px solid black;
-	font-size: 12px;
+h3 {
+	font-size: 0.9rem;
 }
 
-.codearea {
-	color:#FFFFFF;
-	background-color:#000000;
-	padding: 10px;
-	font-size: 12px;
+h4 {
+	font-size: 0.8rem;
+}
+
+blockquote {
+	background-color:#F4F4F4;
+	padding: 5px;
 }
 
 .code {
 	padding: 10px;
 	background-color:#EEEEEE;
+	border-radius: 10px;
+	margin: 5px;
+
+}
+
+.code .controlform {
+}
+
+.code .copyarea {
+	display: none;
+	margin: 10px;
+	padding: 10px;
+	border: 1px solid black;
+	font-size: 0.7rem;
+
+	overflow: auto;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+}
+
+.code .codearea {
+    font-family: source-code-pro, Consolas, 'Courier New', Courier, Monaco, monospace;
+    font-size: 0.8rem;
+    line-height: 1.2;
+
+	color:#FFFFFF;
+	background-color:#000000;
+	padding: 10px;
+	overflow: auto;
+	white-space: pre-wrap;
+	word-wrap: break-word;
 }
 
 table {
