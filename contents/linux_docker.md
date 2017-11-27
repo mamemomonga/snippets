@@ -23,7 +23,7 @@
 現在のユーザをdockerコマンドを実行できるようにする
 
 	#-- {"wrap":"sudo bash -xeu"}
-	usermod -a -G docker $USER
+	usermod -a -G docker $SUDO_USER
 
 いったんログアウトする
 
@@ -58,6 +58,7 @@
 
 コピペする場合は先頭の $ は除去して一行づつ確認しながら実行
 
+	#-- {"placeholder":"/dev/xvf1"}
 	$ sudo mkfs.ext4 /dev/xvdf1
 	$ sudo mount /dev/xvdf1 /mnt
 	$ sudo e2label /dev/xvdf1 docker
@@ -66,6 +67,7 @@
 	$ sudo rm -rf /var/lib/docker
 	$ sudo mkdir /var/lib/docker
 	$ sudo sh -c 'echo "LABEL=docker /var/lib/docker ext4 defaults,discard 0 0" >> /etc/fstab'
+	$ sudo umount /mnt
 	$ sudo mount -a
 
 	$ ls /var/lib/docker
