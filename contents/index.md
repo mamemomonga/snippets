@@ -4,15 +4,19 @@
 
 # ページ一覧
 
-* [bashといろいろなツール](./cli)
 
-## Linux, macOS, UNIX系OS
+## Linuxセットアップ
 
-* [Debian Jessie(8.x), Ubuntu xenial(14.04)](./linux_setup-debian-ubuntu.md)
-* [Docker](./linux_docker.md)
-* [nginx](./linux_nginx.md)
-* [MariaDB](./linux_mariadb.md)
-* [PHP](./linux_php.md)
+* [Debian Jessie(8.x), Ubuntu xenial(14.04)](./setup-debian-ubuntu.md)
+
+## UNIX系アプリケーション(Linux, macOS)
+
+* [シェル芸(Bash)](./cli)
+* [Docker](./linux/docker.md)
+* [tmux](./linux/tmux.md)
+* [nginx](./linux/nginx.md)
+* [MariaDB](./linux/mariadb.md)
+* [PHP](./linux/php.md)
 
 ## EcmaScript6
 
