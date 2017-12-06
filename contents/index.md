@@ -9,9 +9,18 @@
 
 * [Debian Jessie(8.x), Ubuntu xenial(14.04)](./setup-debian-ubuntu.md)
 
+## BashとCLIツール
+
+* [Bash](./cli/bash.md)
+* [jq](./cli/jq.md)
+* [curl](./cli/curl.md)
+* [Dockerで使い捨て環境](./cli/docker-oneuse.md)
+* [ネットワーク関連](./cli/net.md)
+* [いろいろなスクリプト](./cli/scripts.md)
+*
+
 ## UNIX系アプリケーション(Linux, macOS)
 
-* [シェル芸(Bash)](./cli)
 * [Docker](./linux/docker.md)
 * [tmux](./linux/tmux.md)
 * [nginx](./linux/nginx.md)

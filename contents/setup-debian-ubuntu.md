@@ -1,18 +1,5 @@
 # Linux: Debian Jessie(8.x), Ubuntu xenial(14.04) の設定
 
-## ホスト名変更
-
-ホスト名を「THE_NEW_HOSTNAME」に設定して再起動
-
-	#-- { "wrap":"sudo bash -xeu","placeholder":"THE_NEW_HOSTNAME" }
-	NEW_HOSTNAME="THE_NEW_HOSTNAME"
-	echo "$NEW_HOSTNAME" > /etc/hostname
-	echo "127.0.0.1 localhost $NEW_HOSTNAME" > /tmp/hosts
-	sed -e '1d' /etc/hosts >> /tmp/hosts
-	cat /tmp/hosts > /etc/hosts
-	rm /tmp/hosts
-	reboot
-
 ## ローカルタイムを日本時間にする
 
 	#-- { "wrap":"sudo bash -xeu" }
@@ -121,6 +108,19 @@ ntpd再起動と動作確認
 	service postfix restart
 
 
+## ホスト名変更
+
+ホスト名を「THE_NEW_HOSTNAME」に設定して再起動
+
+	#-- { "wrap":"sudo bash -xeu","placeholder":"THE_NEW_HOSTNAME" }
+	NEW_HOSTNAME="THE_NEW_HOSTNAME"
+	echo "$NEW_HOSTNAME" > /etc/hostname
+	echo "127.0.0.1 localhost $NEW_HOSTNAME" > /tmp/hosts
+	sed -e '1d' /etc/hosts >> /tmp/hosts
+	cat /tmp/hosts > /etc/hosts
+	rm /tmp/hosts
+	reboot
+
 ## ユーザの追加とsudoユーザ
 
 パスワードなしでsudoできるユーザを作成する
@@ -129,15 +129,27 @@ rootで実行する
 
 	#-- { "wrap":"bash -xeu","placeholder":"ubuntu" }
 	NEW_USER=ubuntu
-	NEW_ID=1001
-	export DEBIAN_FRONTEND=noninteractive
-
-	groupadd -g $NEW_ID $NEW_USER
-	useradd -g $NEW_ID -u $NEW_ID -m -s /bin/bash $NEW_USER
-
+	if ! $( id $NEW_USER > /dev/null 2>&1 ); then
+		NEW_ID=1000
+		export DEBIAN_FRONTEND=noninteractive
+		groupadd -g $NEW_ID $NEW_USER
+		useradd -g $NEW_ID -u $NEW_ID -m -s /bin/bash $NEW_USER
+	fi
 	apt-get install -y sudo
 	cat > /etc/sudoers.d/wheel_user << EOS
 	$NEW_USER ALL=(ALL) NOPASSWD:ALL
 	EOS
 	chmod 600 /etc/sudoers.d/wheel_user
+
+## HyperV上で動作させる場合
+
+https://docs.microsoft.com/en-us/windows-server/virtualization/hyper-v/supported-ubuntu-virtual-machines-on-hyper-v
+
+	#-- { "wrap":"sudo bash -xeu" }
+	apt-get update
+	apt-get install -y \
+	  linux-virtual-lts-xenial \
+	  linux-tools-virtual-lts-xenial \
+	  linux-cloud-tools-virtual-lts-xenial
+
 
