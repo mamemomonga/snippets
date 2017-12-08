@@ -254,7 +254,6 @@ Webユーザの追加
 
 	#-- {"wrap":"sudo bash -xeu" }
 	apt-get install -y libmemcached-dev
-	cd /usr/local/src/php
 	git clone -b php7 --depth=1 https://github.com/php-memcached-dev/php-memcached
 	cd php-memcached
 	phpize
