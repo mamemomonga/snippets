@@ -2,7 +2,7 @@
 
 シンプルな設定
 
-	#-- { "wrap":"cat ~/.vimrc" }
+	#-- { "wrap":"cat > .vimrc" }
 	syntax on
 	set wildmenu
 	set history=100
@@ -20,7 +20,7 @@
 
 gvimrc
 
-	#-- { "wrap":"cat ~/.gvimrc" }
+	#-- { "wrap":"cat > .gvimrc" }
 	set iminsert=0
 	set imsearch=-1
 	set lines=70
