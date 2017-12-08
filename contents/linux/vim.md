@@ -26,11 +26,6 @@ gvimrc
 	set lines=70
 	set columns=140
 
-	if has('gui_mac')
-		set guifont=GK-M:h12
-		:colorscheme darkblue
-	endif
-
 	" Mac
 	if has('gui_macvim')
 		set guifont=Source\ Code\ Pro:h12
@@ -49,8 +44,13 @@ gvimrc
 		:colorscheme darkblue
 	endif
 
-Windows用に変換(cygwin)
+Windows gvim用(cygwin)
 
+	cd $(cygpath -u "$USERPROFILE")
+
+.vimrc, .gvimrc ファイルを作成
+
+	#-- { "wrap":"bash -xeu" }
 	cd $(cygpath -u "$USERPROFILE")
 	iconv -f utf8 -t cp932 > _vimrc < .vimrc
 	iconv -f utf8 -t cp932 > _gvimrc < .gvimrc
