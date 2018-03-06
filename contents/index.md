@@ -17,7 +17,7 @@
 * [Dockerで使い捨て環境](./cli/docker-oneuse.md)
 * [ネットワーク関連](./cli/net.md)
 * [いろいろなスクリプト](./cli/scripts.md)
-*
+
 
 ## UNIX系アプリケーション(Linux, macOS)
 
@@ -27,6 +27,7 @@
 * [nginx](./linux/nginx.md)
 * [MariaDB](./linux/mariadb.md)
 * [PHP](./linux/php.md)
+* [MySQL/MariaDB](./linux/mysql.md)
 
 ## EcmaScript6
 
