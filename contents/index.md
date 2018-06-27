@@ -14,15 +14,14 @@
 * [Bash](./cli/bash.md)
 * [jq](./cli/jq.md)
 * [curl](./cli/curl.md)
-* [Dockerで使い捨て環境](./cli/docker-oneuse.md)
 * [ネットワーク関連](./cli/net.md)
 * [いろいろなスクリプト](./cli/scripts.md)
 
 
 ## UNIX系アプリケーション(Linux, macOS)
 
+* [Docker](./docker/index.md)
 * [vim](./linux/vim.md)
-* [Docker](./linux/docker.md)
 * [tmux](./linux/tmux.md)
 * [nginx](./linux/nginx.md)
 * [MariaDB](./linux/mariadb.md)

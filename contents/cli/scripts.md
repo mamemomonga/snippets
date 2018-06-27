@@ -12,10 +12,21 @@
 
 	date +'%y%m%d_%H%M%S'
 
-## ランダムなパスワードの生成
+## ランダムなパスワード
+
+32文字のパスワードを生成する
+
+フォントによって違いがわかるにくい文字は除外してある。
 
 	#-- {"wrap":"bash"}
-	perl -e 'my @chars; for(my $i=0;$i<$ARGV[1];$i++) { push @chars,substr($ARGV[0],int(rand()*length($ARGV[0])),1) }; print join("",@chars);' 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789-_().!' 32
+	perl -E 'my @chars; for(my $i=0;$i<$ARGV[1];$i++) { push @chars,substr($ARGV[0],int(rand()*length($ARGV[0])),1) }; say join("",@chars);' 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789-_().!' 32
+
+## ランダムなデータ
+
+ランダムな長さのデータを生成する。以下の例だと8バイトのデータを16進数で表示し、16文字のデータが得られる。
+
+	#-- {"wrap":"bash"}
+	openssl rand -hex 8
 
 ## 標準入力から行毎に読み込む
 

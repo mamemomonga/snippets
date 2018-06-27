@@ -1,6 +1,6 @@
-# Docker
+# Linuxへのセットアップ
 
-## セットアップ (Ubuntu 16.04.3 LTS)
+## Ubuntu 16.04.3 LTS の場合
 
 * OverlayFS2 を使用する
 * dockerデータを別ディスクに設定する
@@ -30,7 +30,6 @@
 ### Docker Composeのインストール
 
 [こちらで](https://docs.docker.com/compose/install/#install-compose) 最新版を確認する
-
 
 	#-- {"wrap":"sudo bash -xeu"}
 	curl -L https://github.com/docker/compose/releases/download/1.17.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
