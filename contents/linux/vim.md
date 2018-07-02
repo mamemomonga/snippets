@@ -44,6 +44,16 @@ gvimrc
 		:colorscheme darkblue
 	endif
 
+Ubuntu(GTK2)でALT+Cでクリップボードにコピー、ALT+Vでクリップボードにペースト
+
+	if has('gui_gtk2')
+	    map <silent> <M-v> "+gP
+	    map <silent> <M-c> "+y
+	endif
+
+* CTRL+V だと 矩形ビジュアルモードとカブる
+* CTRL+Shift+V,C, Super+V,C は簡単にはできなそう。
+
 Windows gvim用(cygwin)
 
 	cd $(cygpath -u "$USERPROFILE")
