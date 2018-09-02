@@ -179,7 +179,7 @@ if の後にある [ が test コマンド
 	esac
 
 
-## カレントディレクトリを得る
+## スクリプトのあるパスを得る
 
 	${0%/*}
 
@@ -199,11 +199,15 @@ if の後にある [ が test コマンド
 
 	BASEDIR=$( perl -MCwd -MFile::Basename -e 'print Cwd::abs_path(dirname($ARGV[0])."/../")' $0)
 
-## 1列目を取得
+## スペースで区切られた1列目を取得
 
 awkももっとも簡単な使用例。awkはオークと読むらしい
 
 	cat hoge.txt | awk '{print $1}'
+
+## : で区切られた1列目を取得
+
+	cat /etc/group | awk -F: '{print $1}'
 
 ## nobodyユーザで実行したい
 
