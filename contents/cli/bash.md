@@ -267,3 +267,47 @@ awkももっとも簡単な使用例。awkはオークと読むらしい
 	echo "Hello World!"
 
 
+# シンプルな選択式シェルスクリプト
+
+複数のコマンドを一つのスクリプトに含める際に便利
+
+do_[引数] の functionを実行する
+
+	#-- {"wrap":"cat > command.sh"}
+	#!/bin/bash
+	set -eu
+	BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+	
+	COMMANDS="cmd1 cmd2"
+	
+	function do_cmd1 {
+		echo "command1"
+		echo "application: $BASEDIR"
+	}
+	
+	function do_cmd2 {
+		echo "command2"
+		echo "application: $BASEDIR"
+	}
+	
+	function run {
+		if [ "$(id -u)" != "0" ]; then
+		exec sudo $0 $@
+		fi
+		for i in $COMMANDS; do
+		if [ "$i" == "${1:-}" ]; then
+			shift
+			do_$i $@
+			exit 0
+		fi
+		done
+		echo "USAGE: $( basename $0 ) COMMAND"
+		echo "COMMANDS:"
+		for i in $COMMANDS; do
+		echo "   $i"
+		done
+		exit 1
+	}
+	
+	run $@
+

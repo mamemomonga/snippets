@@ -1,4 +1,8 @@
-# Linux: Debian Jessie(8.x), Ubuntu xenial(14.04) の設定
+# Linuxの設定
+
+* Debian Jessie(8.x)
+* Ubuntu 16.04 LTS(Xenial Xerus)
+* Ubuntu 18.04.1 LTS (Bionic Beaver)
 
 ## ローカルタイムを日本時間にする
 
@@ -8,14 +12,14 @@
 	echo 'Asia/Tokyo' > /etc/timezone
 	date
 
-## ロケールが日本語だったら英語にする
+## ロケールの変更
+
+日本語と英語を有効にして、ロケールを英語にする
 
 	#-- { "wrap":"sudo bash -xeu" }
-	if [ "$LANG" = "ja_JP.UTF-8" ]; then
-		sed -i '/^# en_US.UTF-8 UTF-8/s/^# //' /etc/locale.gen
-		locale-gen
-		update-locale LANG=en_US.UTF-8
-	fi
+	perl -i -nlpE 's!^# (en_US.UTF-8 UTF-8)!$1!; s!^# (ja_JP.UTF-8 UTF-8)!$1!; ' /etc/locale.gen
+	locale-gen
+	update-locale LANG=en_US.UTF-8
 
 ## update, git, curl, wget
 
@@ -108,7 +112,7 @@ ntpd再起動と動作確認
 	service postfix restart
 
 
-## ホスト名変更
+## ホスト名変更(Jessie, Xenial)
 
 ホスト名を「THE_NEW_HOSTNAME」に設定して再起動
 
@@ -120,6 +124,21 @@ ntpd再起動と動作確認
 	cat /tmp/hosts > /etc/hosts
 	rm /tmp/hosts
 	reboot
+
+## ホスト名変更(Bionic)
+
+	#-- { "wrap":"sudo bash -xeu","placeholder":"THE_NEW_HOSTNAME" }
+	sudo hostnamectl set-hostname THE_NEW_HOSTNAME
+	hostnamectl
+	cat /etc/hostname
+
+これでリブート後に戻ってしまうようだったら、cloud.cfgの設定を確認して、以下を変更する。
+
+	$ vim /etc/cloud/cloud.cfg 
+	preserve_hostname: false
+	↓　
+	preserve_hostname: true
+
 
 ## ユーザの追加とsudoユーザ
 

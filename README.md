@@ -1,4 +1,4 @@
-# コピペが便利なスニペット集
+# スニペット集
 
 https://mamemomonga.github.io/snippets/
 

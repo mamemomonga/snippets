@@ -7,7 +7,7 @@
 
 ## Linuxセットアップ
 
-* [Debian Jessie(8.x), Ubuntu xenial(14.04)](./setup-debian-ubuntu.md)
+* [Debian, Ubuntu](./setup-debian-ubuntu.md)
 
 ## BashとCLIツール
 
