@@ -1,5 +1,5 @@
 // vim:ft=javascript
-import CopipeMeister from './copipe_meister.es6'
+import CopipeMeister from './copipe_meister.es'
 
 document.addEventListener('DOMContentLoaded',()=>{
 	const cm=new CopipeMeister(window);

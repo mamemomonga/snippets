@@ -6,5 +6,16 @@ https://mamemomonga.github.io/snippets/
 
 * [marked](https://github.com/chjj/marked)
 * [escape-html](https://github.com/component/escape-html)
-* [path](https://nodejs.org/docs/latest/api/path.html)
-* [Source Code Pro](http://dwabyick.github.io/Source-Code-Pro/)
+
+# ビルド
+
+	$ yarn
+
+Productionモード
+
+	$ yarn run gulp
+
+Developmentモード
+
+	$ NODE_ENV=development yarn run gulp
+

@@ -1,4 +1,5 @@
 *.swp
-node_modules/
+/node_modules
 /var
 /contents/forapp-markdown-sample.md
+/yarn-error.log

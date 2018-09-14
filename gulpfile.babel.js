@@ -1,60 +1,101 @@
-import gulp from 'gulp'
-import gutil from 'gulp-util'
-import ejs from 'gulp-ejs'
+// ------------------------
+// gulpfile.babel.js
+// ------------------------
+
+import gulp      from 'gulp'
+import log       from 'fancy-log'
+import babel     from 'gulp-babel'
+import ejs       from 'gulp-ejs'
+import sass      from 'gulp-sass'
+import htmlmin   from 'gulp-htmlmin'
 import webserver from 'gulp-webserver'
-import webpack from 'webpack-stream'
+import fs        from 'fs'
+import webpack   from 'webpack-stream'
 import UglifyJSPlugin from 'uglifyjs-webpack-plugin'
-import fs from 'fs'
-import sass from 'gulp-sass'
 
-let production = false
+const DEVELOPMENT = ( process.env.NODE_ENV != 'development' ) ? false : true
+if(DEVELOPMENT) { log.info("DEVELOPMENT MODE") }
 
-// index
+// ------------------------
+// WebPack
+// JavaScriptの連結圧縮
+// ------------------------
+const webpacks=(()=>{
+
+	const common=(args)=>{
+		return webpack({
+			node: {
+				__dirname: false,
+				__filename: false,
+				process: false,
+			},
+			devtool: DEVELOPMENT ? 'source-map' : undefined,
+			plugins: DEVELOPMENT ? undefined : [ new UglifyJSPlugin() ],
+			mode: DEVELOPMENT ? 'development' : 'production',
+			module: { rules: [{
+				test: /\.es$/,
+				use: {
+					loader: 'babel-loader',
+					options: {
+						presets: [
+							[ "@babel/env", args.preset_env ]
+						]
+					}
+				}
+			}]},
+			externals: args.server ? args.externals : [],
+			output: {
+				filename: args.filename,
+				libraryTarget: args.server ? 'commonjs2' : undefined
+			}
+		})
+	}
+	return {
+		// クライアントサイドJS
+		client: (filename)=>{
+			return common({
+				client: true,
+				filename: filename,
+				// 対象のブラウザバージョン
+				preset_env: { targets: { browsers: "last 2 versions" }}
+			})
+		}
+	}
+})()
+
+// ------------------------
+// tasks
+// ------------------------
 gulp.task('index',()=>{
-	const css = production ? fs.readFileSync('./var/prod/index.css') : '';
-	const js  = production ? fs.readFileSync('./var/prod/index.js') : '';
+	const css = DEVELOPMENT ? '' : fs.readFileSync('./var/prod/index.css');
+	const js  = DEVELOPMENT ? '' : fs.readFileSync('./var/prod/index.js');
 	return gulp.src('./ejs/index.ejs')
 	.pipe(ejs({
 		css: css,
 		js: js,
- 		production: production,
-	},{},{ ext: '.html' }).on('error', gutil.log))
-	.pipe( gulp.dest( production ? './' : './var/dev' ));
-});
+ 		production: ! DEVELOPMENT,
+	},{},{ ext: '.html' }).on('error',log))
+	.pipe( gulp.dest( DEVELOPMENT ? './var/dev' : './' ));
+})
 
-// es6
-gulp.task('es6',()=>{
-	return gulp.src('./es6/index.es6')
-	.pipe(webpack({
-		output:  { filename: 'index.js' },
-		devtool: production ? undefined : 'inline-source-map',
-		plugins: production ? [ new UglifyJSPlugin() ] : [],
-		module:  { loaders:[{ test: /\.es6$/, loader:'babel-loader'}]}
-	}))
-	.pipe( gulp.dest( production ? './var/prod' : './var/dev' ));
+// es
+gulp.task('es',()=>{
+	return gulp.src('./es/index.es')
+	.pipe(webpacks.client('index.js'))
+	.pipe( gulp.dest( DEVELOPMENT ? './var/dev' : './var/prod' ));
 })
 
 // sass
 gulp.task('sass',()=>{
 	return gulp.src('./sass/*.scss')
 	.pipe(sass({
-		outputStyle: production ? 'compressed' : 'expanded'
+		outputStyle: DEVELOPMENT ? 'expanded' : 'compressed'
 	}).on('error',sass.logError))
-	.pipe( gulp.dest( production ? './var/prod' : './var/dev' ));
+	.pipe( gulp.dest( DEVELOPMENT ? './var/dev' : './var/prod'));
 });
 
-// build
-gulp.task('build',['es6','sass'],()=>{
-	return gulp.start('index')
-});
-
-// production: productionモードでのbuild
-gulp.task('production',()=>{
-	production=true
-	gulp.start('build')
-	gulp.start('webserver')
-	console.log("確認URL: http://localhost:3000/index.html")
-});
+gulp.task('build-js-css', gulp.parallel('es','sass'))
+gulp.task('build', gulp.series('build-js-css','index'))
 
 // webserver
 gulp.task('webserver',() => {
@@ -67,11 +108,20 @@ gulp.task('webserver',() => {
     }));
 });
 
-// developemt サーバ
-gulp.task('default',['build','webserver'],()=>{
-	gulp.watch('./es6/*.es6',     ['es6']);
-	gulp.watch('./sass/*.scss',   ['sass']);
-	gulp.watch('./ejs/index.ejs', ['index']);
+gulp.task('watch-development',()=>{
+	gulp.watch('./es/*.es',       gulp.series('es'));
+	gulp.watch('./sass/*.scss',   gulp.series('sass'));
+	gulp.watch('./ejs/index.ejs', gulp.series('index'));
 	console.log("確認URL: http://localhost:3000/var/dev/index.html")
-});
+})
+
+gulp.task('watch-production',()=>{
+	console.log("確認URL: http://localhost:3000/index.html")
+})
+
+gulp.task('default',gulp.series(
+	'build',
+	'webserver',
+	DEVELOPMENT ? 'watch-development' : 'watch-production')
+)
 
