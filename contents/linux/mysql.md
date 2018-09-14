@@ -27,7 +27,7 @@ CRUD(CREATE,READ,UPDATE,DELETE)
 
 管理権限のあるユーザの登録
 
-	GRANT ALL ON *.* TO ncsetup@localhost IDENTIFIED BY 'PASSWORD' WITH GRANT OPTION;
+	GRANT ALL ON *.* TO admin@localhost IDENTIFIED BY 'PASSWORD' WITH GRANT OPTION;
 
 特定DBのみの管理権限
 
@@ -65,15 +65,21 @@ WordPress
 
 # 設定
 
+ランダムな文字列を含んだrootパスワードを設定する。
+
 mysqlのrootユーザとrootパスワードをUNIX rootユーザの場合省略できるようにする
 
 	#-- {"wrap":"sudo bash -eu"}	
-	MYSQLPASSWORD='THE_ROOT_PASSWORD';
+	MYSQLPASSWORD="$(bash << 'END_OF_PERL'
+	perl -e 'my @chars; for(my $i=0;$i<$ARGV[1];$i++) { push @chars,substr($ARGV[0],int(rand()*length($ARGV[0])),1) }; print join("",@chars);' 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789-_().!' 32
+	END_OF_PERL
+	)"
 	mysqladmin password "$MYSQLPASSWORD"
 	echo '[client]' > /root/.my.cnf
 	echo 'user=root' >> /root/.my.cnf
 	echo "password=$MYSQLPASSWORD" >> /root/.my.cnf
 	chmod 600 /root/.my.cnf
+	echo "GRANT ALL ON *.* TO root@'127.0.0.1' IDENTIFIED BY '$MYSQLPASSWORD' WITH GRANT OPTION;" | mysql
 
 rootパスワードの更新
 
