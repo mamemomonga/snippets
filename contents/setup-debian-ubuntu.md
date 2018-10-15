@@ -12,6 +12,8 @@
 	echo 'Asia/Tokyo' > /etc/timezone
 	date
 
+/usr/share/zoneinfo が無い場合は apt install tzdata
+
 ## ロケールの変更
 
 日本語と英語を有効にして、ロケールを英語にする
