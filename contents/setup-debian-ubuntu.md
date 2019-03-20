@@ -1,24 +1,52 @@
 # Linuxの設定
 
-* Debian Jessie(8.x)
+* Debian 8.x (jessie)
+* Debian 9.x (stretch)
 * Ubuntu 16.04 LTS(Xenial Xerus)
 * Ubuntu 18.04.1 LTS (Bionic Beaver)
+
+## Docker for Mac をつかった簡易実行環境(Debian Jessie)
+
+[詳しくはこちら](https://github.com/mamemomonga/docker-workspaces)
+
+macOSで実行
+
+	#-- { "wrap":"bash -xeu" }
+	mkdir ws
+	cd ws
+	curl -o workspace https://raw.githubusercontent.com/mamemomonga/docker-workspaces/master/dist/workspace-darwin-amd64
+	chmod 755 ./workspace
+	./workspace config-debian
+	./workspace pull home start
+
+内容 | コマンド
+-----|---------
+ rootでログイン | ./workspace root
+ appでログイン  | ./workspace app
+ 終了 | ./workspace stop
+
+## apt-get update
+
+	#-- { "wrap":"sudo bash -xeu" }
+	export DEBIAN_FRONTEND=noninteractive
+	apt-get update
 
 ## ローカルタイムを日本時間にする
 
 	#-- { "wrap":"sudo bash -xeu" }
+	apt-get -y install tzdata
 	rm /etc/localtime
 	ln -s /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 	echo 'Asia/Tokyo' > /etc/timezone
 	date
-
-/usr/share/zoneinfo が無い場合は apt install tzdata
 
 ## ロケールの変更
 
 日本語と英語を有効にして、ロケールを英語にする
 
 	#-- { "wrap":"sudo bash -xeu" }
+	export DEBIAN_FRONTEND=noninteractive
+	apt-get -y install locales
 	perl -i -nlpE 's!^# (en_US.UTF-8 UTF-8)!$1!; s!^# (ja_JP.UTF-8 UTF-8)!$1!; ' /etc/locale.gen
 	locale-gen
 	update-locale LANG=en_US.UTF-8
@@ -27,7 +55,6 @@
 
 	#-- { "wrap":"sudo bash -xeu" }
 	export DEBIAN_FRONTEND=noninteractive
-	apt-get update
 	apt-get -y upgrade
 	apt-get install -y git-core curl wget
 
@@ -55,7 +82,7 @@
 	set fenc=utf-8
 	set enc=utf-8
 	EOS
-	sudo sh -c "echo '3' | update-alternatives --config editor"
+	sudo sh -c "update-alternatives --set editor /usr/bin/vim.basic"
 
 ## NTP
 
@@ -103,7 +130,6 @@ ntpd再起動と動作確認
 	service ntp restart
 	sleep 10
 	ntpq -p
-
 
 ## postfix
 
@@ -162,7 +188,12 @@ rootで実行する
 	EOS
 	chmod 600 /etc/sudoers.d/wheel_user
 
-## HyperV上で動作させる場合
+## VMware上で動作させる
+
+	#-- { "wrap":"sudo bash -xeu" }
+	apt-get install -y open-vm-tools
+
+## HyperV上で動作させる
 
 https://docs.microsoft.com/en-us/windows-server/virtualization/hyper-v/supported-ubuntu-virtual-machines-on-hyper-v
 
@@ -172,5 +203,4 @@ https://docs.microsoft.com/en-us/windows-server/virtualization/hyper-v/supported
 	  linux-virtual-lts-xenial \
 	  linux-tools-virtual-lts-xenial \
 	  linux-cloud-tools-virtual-lts-xenial
-
 
