@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "gulp default",
-    "prod": "gulp production",
+    "dev": "NODE_ENV=development gulp default",
+    "prod": "NODE_ENV=production gulp default",
     "gulp": "gulp"
   },
   "keywords": [],

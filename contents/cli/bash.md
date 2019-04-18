@@ -271,11 +271,11 @@ awkももっとも簡単な使用例。awkはオークと読むらしい
 	echo "Hello World!"
 
 
-# シンプルな選択式シェルスクリプト
+# シンプルなサブコマンド対応スクリプト
 
 複数のコマンドを一つのスクリプトに含める際に便利
 
-do_[引数] の functionを実行する
+do_[引数] の functionを実行する。コマンドはCOMMANDSに定義する。
 
 	#-- {"wrap":"cat > command.sh"}
 	#!/bin/bash
@@ -295,9 +295,11 @@ do_[引数] の functionを実行する
 	}
 	
 	function run {
-		if [ "$(id -u)" != "0" ]; then
-		exec sudo $0 $@
-		fi
+
+		# sudoして自分自身を再実行させたい場合は
+		# 以下のコメントを削除
+		# if [ "$(id -u)" != "0" ]; then exec sudo $0 $@ fi
+
 		for i in $COMMANDS; do
 		if [ "$i" == "${1:-}" ]; then
 			shift
