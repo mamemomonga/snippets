@@ -11,8 +11,15 @@
 
 	#-- {"wrap":"bash -xeu"}
 	openssl req -new -x509 -days 3650 -key self-signed.key -out self-signed.crt \
-	 -subj "/CN=anonymous/ST=Kyoto/L=Kyoto/O=SnakeOil Japan LTD./OU=Web Section"
- 
+	 -subj "/CN=example.com/C=JP/ST=Kyoto/L=Kyoto/O=SnakeOil Japan LTD./OU=Web Section"
+
+CSRと自己署名キー
+
+	#-- {"wrap":"bash -xeu"}
+	openssl req -new -key server.key -out server.csr \
+	 -subj "/CN=example.com/C=JP/ST=Kyoto/L=Kyoto/O=SnakeOil Japan LTD./OU=Web Section"
+	openssl x509 -days 3650 -req -signkey server.key < server.csr > server.crt
+
 ## snakeoil証明書
 
 	#-- {"wrap":"bash -xeu"}
