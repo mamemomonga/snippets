@@ -28,6 +28,7 @@
 * [MariaDB](./unix/mariadb.md)
 * [PHP](./unix/php.md)
 * [MySQL/MariaDB](./unix/mysql.md)
+* [Let's Encrypt](./unix/letsencrypt.md)
 
 ## EcmaScript6
 
