@@ -11,12 +11,10 @@ Ubuntu 18.04 LTS
 
 ドメイン名の設定
 
-	#-- {"wrap":"bash -xeu"}
 	export LE_TARGET_DOMAIN=example.com
 
 メールアドレスの設定
 
-	#-- {"wrap":"bash -xeu"}
 	export LE_EMAIL=name@domain.com
 
 
@@ -78,9 +76,9 @@ nginxの設定
 	  --webroot \
 	  --webroot-path /usr/local/certbot/var/$LE_TARGET_DOMAIN/webroot \
 	  --rsa-key-size 4096 \
+	  --agree-tos \
 	  -d $LE_TARGET_DOMAIN \
 	  -m $LE_EMAIL
-
 
 # 共通項目
 
