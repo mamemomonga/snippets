@@ -28,15 +28,15 @@
 * [MariaDB](./unix/mariadb.md)
 * [PHP](./unix/php.md)
 * [MySQL/MariaDB](./unix/mysql.md)
-* [Let's Encrypt](./unix/letsencrypt.md)
 
 ## EcmaScript6
 
 * [EcmaScrpit6 Webアプリケーション](./es6_simple-web-app.md)
 
-## マストドン
+## Webサービス
 
-* [Mastodon: ポスト](./mastodon_posts.md)
+* [Let's Encrypt](./services/letsencrypt.md)
+* [Mastodon: ポスト](./services/mastodon_posts.md)
 
 
 # このサイトについて

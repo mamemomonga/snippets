@@ -131,6 +131,10 @@ nginxの設定
 	sudo nginx -t
 	sudo systemctl restart nginx
 
+### 削除
+
+	$ certbot revoke --cert-path=/etc/letsencrypt/archive/$LE_TARGET_DOMAIN/cert1.pem
+
 ### 証明書の自動更新
 
 証明書は90日で失効するので、月に一回自動更新仕掛けを作る。月のランダムな1日の3時の何分かに実行。
