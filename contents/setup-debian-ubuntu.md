@@ -78,7 +78,7 @@ macOSで実行
 	set softtabstop=0
 	set termencoding=utf-8
 	set encoding=utf-8
-	set fileencodings=iso-2022-jp,utf-8,cp932,euc-jp,ucs2le,ucs-2
+	set fileencodings=utf-8,cp932,euc-jp,iso-2022-jp,ucs2le,ucs-2
 	set fenc=utf-8
 	set enc=utf-8
 	EOS
