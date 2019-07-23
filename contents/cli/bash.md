@@ -287,21 +287,18 @@ do_[引数] の functionを実行する。コマンドはCOMMANDSに定義する
 	#-- {"wrap":"cat > command.sh"}
 	#!/bin/bash
 	set -eu
-	BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-	
-	COMMANDS="cmd1 cmd2"
-	
-	function do_cmd1 {
+
+	do_cmd1() {
 		echo "command1"
 		echo "application: $BASEDIR"
 	}
 	
-	function do_cmd2 {
+	do_cmd2() {
 		echo "command2"
 		echo "application: $BASEDIR"
 	}
 	
-	function run {
+	run() {
 
 		# sudoして自分自身を再実行させたい場合は
 		# 以下のコメントを削除
@@ -322,5 +319,6 @@ do_[引数] の functionを実行する。コマンドはCOMMANDSに定義する
 		exit 1
 	}
 	
+	BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+	COMMANDS="cmd1 cmd2"
 	run $@
-
