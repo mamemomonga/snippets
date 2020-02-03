@@ -6,6 +6,7 @@
 
 ## Linuxセットアップ
 
+* [Debian, Ubuntu ベーシックセットアップ](./basic-setup-debian-ubuntu.md)
 * [Debian, Ubuntu](./setup-debian-ubuntu.md)
 
 ## BashとCLIツール
