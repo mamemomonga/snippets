@@ -13,7 +13,7 @@
 	INSTALL_BUILD_ESSENTIAL=1
 	
 	# Dockerをインストールする
-	INSTALL_DOCKER=2
+	INSTALL_DOCKER=1
 	
 	if [ "$(id -u)" != 0 ]; then
 		echo "Please Run as root"
@@ -57,10 +57,10 @@
 		tzdata \
 		git \
 		curl \
-	   	wget \
+		wget \
 		vim \
 		ntp \
-	   	postfix \
+		postfix \
 		jq \
 		sudo \
 		dnsutils
