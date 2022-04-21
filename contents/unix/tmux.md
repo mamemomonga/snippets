@@ -18,30 +18,6 @@
 	set-window-option -g window-status-format "#I:#W"
 	set-window-option -g window-status-current-format "#[fg=colour255,bg=colour27,bold] #I:#W #[default]"
 	
-	## 色:ウィンドウリスト
-	setw -g window-status-fg cyan
-	setw -g window-status-bg default
-	setw -g window-status-attr dim
-	
-	## 色:アクティブウィンドウ
-	setw -g window-status-current-fg   white
-	# setw -g window-status-current-bg   red
-	setw -g window-status-current-bg   "#0000FF"
-	setw -g window-status-current-attr bright
-	
-	## 色:ペインボーダー
-	set -g pane-border-fg green
-	set -g pane-border-bg black
-	
-	## 色:アクティブペイン
-	set -g pane-active-border-fg white
-	set -g pane-active-border-bg yellow
-	
-	## 色:コマンドライン
-	set -g message-fg  white
-	set -g message-bg  black
-	set -g message-attr bright
-	
 	# ステータスバーを設定する
 	## 左パネルを設定する
 	set -g status-left-length 40
