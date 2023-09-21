@@ -92,9 +92,15 @@
 	EOS
 	
 	update-alternatives --set editor /usr/bin/vim.basic
-	mv /etc/ntp.conf /etc/ntp.conf.orig
-	
-	cat > /etc/ntp.conf << 'EOS'
+
+	NTPCONF=/etc/ntp.conf
+	if [ -e '/etc/ntpsec/ntp.conf' ]; then
+		NTPCONF=/etc/ntpsec/ntp.conf
+	fi
+
+	mv $NTPCONF $NTPCONF'.orig'
+
+	cat > $NTPCONF << 'EOS'
 	driftfile /var/lib/ntp/drift
 	statistics loopstats peerstats clockstats
 	filegen loopstats file loopstats type day enable
@@ -105,16 +111,16 @@
 	restrict 127.0.0.1 
 	restrict ::1
 	EOS
-	
+
 	if [ $IS_RUN_EC2 == 1 ]; then
-		cat >> /etc/ntp.conf << 'EOS'
+	    cat >> $NTPCONF << 'EOS'
 	server 0.amazon.pool.ntp.org iburst
 	server 1.amazon.pool.ntp.org iburst
 	server 2.amazon.pool.ntp.org iburst
 	server 3.amazon.pool.ntp.org iburst
 	EOS
 	else
-		cat >> /etc/ntp.conf << 'EOS'
+	    cat >> $NTPCONF << 'EOS'
 	server ntp1.jst.mfeed.ad.jp iburst
 	server ntp2.jst.mfeed.ad.jp iburst
 	server ntp3.jst.mfeed.ad.jp iburst
@@ -124,6 +130,7 @@
 	service ntp restart
 	sleep 10
 	ntpq -p
+
 	sed -i.bak -e 's/^\(inet_protocols = all\)/#\1/' /etc/postfix/main.cf
 	echo 'inet_protocols = ipv4' >> /etc/postfix/main.cf
 	service postfix restart
